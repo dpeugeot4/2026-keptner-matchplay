@@ -180,6 +180,15 @@
     background:#FFFFFF;
     color:var(--green-dark);border-radius:10px;padding:4px 12px;
     box-shadow:0 4px 16px rgba(0,0,0,0.28);
+    border:2px solid #D8362A;
+    animation:courseConditionsGlow 1.8s ease-in-out infinite;
+  }
+  @keyframes courseConditionsGlow{
+    0%, 100%{ box-shadow:0 0 0 0 rgba(216,54,42,0.8), 0 4px 16px rgba(0,0,0,0.28); transform:scale(1); }
+    50%{ box-shadow:0 0 0 26px rgba(216,54,42,0), 0 4px 16px rgba(0,0,0,0.28); transform:scale(1.06); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .status-alert{ animation:none; }
   }
   .banter-preview-box{
     display:flex;flex-direction:column;gap:10px;
@@ -216,8 +225,7 @@
   .section-head h2{font-family:'Fraunces',serif;font-weight:600;font-size:21px;margin:0;}
   .section-head .rule{flex:1;height:1px;background:repeating-linear-gradient(90deg,var(--line) 0 6px, transparent 6px 11px);}
   @media(max-width:640px){
-    .section-head{flex-wrap:wrap;}
-    #viewFullBracketBtn{flex-basis:100%;margin-top:10px;margin-left:40px;}
+    .section-head .rule{flex:0 1 12px;}
   }
 
   .playin-note{font-size:13px;color:var(--ink-soft);line-height:1.6;margin:0 0 16px;max-width:800px;}
@@ -713,7 +721,7 @@ Extra-hole winners:
         <div class="hr-label">Course Conditions</div>
         <div class="status-alert">
           <div class="ia-icon">⛳</div>
-          <div class="ia-value">Back 9 · Wet</div>
+          <div class="ia-value">🧹 Rake &amp; Place in Bunkers</div>
         </div>
       </div>
     </div>
@@ -724,7 +732,7 @@ Extra-hole winners:
 
   <div id="topLeadSection"></div>
 
-  <div class="section-head"><div class="tee">MP</div><h2>Match Play Bracket</h2><div class="rule"></div><button class="cb-btn gold" id="viewFullBracketBtn" style="flex:none;">View Bracket</button></div>
+  <div class="section-head"><div class="tee">MP</div><h2>Match Play</h2><div class="rule"></div><button class="cb-btn gold" id="viewFullBracketBtn" style="flex:none;">Full Bracket</button></div>
   <div class="regions-grid" id="regionsGrid"><div class="region">
     <div class="region-head"><h3>Bracket 1</h3></div>
     <div class="bracket-scale-outer" style="height: 231.726px;">
@@ -847,7 +855,7 @@ Extra-hole winners:
 <script>
 /* ============ CONFIG ============ */
 const ADMIN_PIN = "9512"; // change this before sending the file out
-/*EXPORT_DATE_START*/const EXPORT_DATE = "2026-08-25T18:00:00.000Z";/*EXPORT_DATE_END*/
+/*EXPORT_DATE_START*/const EXPORT_DATE = "2026-08-26T13:30:00.000Z";/*EXPORT_DATE_END*/
 
 /* ============ DATA MODEL ============ */
 const matches = {};
