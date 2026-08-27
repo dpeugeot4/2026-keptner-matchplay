@@ -855,7 +855,7 @@ Extra-hole winners:
 <script>
 /* ============ CONFIG ============ */
 const ADMIN_PIN = "9512"; // change this before sending the file out
-/*EXPORT_DATE_START*/const EXPORT_DATE = "2026-08-26T13:30:00.000Z";/*EXPORT_DATE_END*/
+/*EXPORT_DATE_START*/const EXPORT_DATE = "2026-08-27T13:15:00.000Z";/*EXPORT_DATE_END*/
 
 /* ============ DATA MODEL ============ */
 const matches = {};
@@ -2094,6 +2094,24 @@ function saveIdentity(name, pin){
   try { localStorage.setItem(BANTER_IDENTITY_KEY, JSON.stringify({name, pin})); } catch(e){}
 }
 
+// Reactions (like/dislike) are anonymous and device-based — no name/PIN needed,
+// unlike posting a comment. Each browser gets a random local ID the first time
+// it reacts to anything, just so the same device can't double-count itself and
+// so a tap can be un-done. This is NOT tied to identity in any way.
+const BANTER_DEVICE_KEY = 'banditBanterDeviceId';
+function getDeviceReactionId(){
+  try {
+    let id = localStorage.getItem(BANTER_DEVICE_KEY);
+    if(!id){
+      id = 'dev_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 10);
+      localStorage.setItem(BANTER_DEVICE_KEY, id);
+    }
+    return id;
+  } catch(e){
+    return 'dev_' + Math.random().toString(36).slice(2, 10);
+  }
+}
+
 function escapeHtml(str){
   return String(str).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
 }
@@ -2186,16 +2204,7 @@ async function claimOrVerifyAndPost(name, pin, text){
 
 async function toggleCommentReaction(commentId, type){
   if(!banterDb) return;
-  const saved = getSavedIdentity();
-  if(!saved || !saved.name || !saved.pin){
-    alert('Pick your name and post once first (up top) — then reacting works with one tap.');
-    return;
-  }
-  const verifyResult = await verifyOrClaimIdentity(saved.name, saved.pin);
-  if(!verifyResult.ok){
-    alert(verifyResult.message);
-    return;
-  }
+  const deviceId = getDeviceReactionId();
   const commentRef = banterDb.collection('banterComments').doc(commentId);
   const otherType = type === 'like' ? 'dislikes' : 'likes';
   const thisType = type === 'like' ? 'likes' : 'dislikes';
@@ -2205,12 +2214,12 @@ async function toggleCommentReaction(commentId, type){
     const thisMap = data[thisType] || {};
     const otherMap = data[otherType] || {};
     const update = {};
-    if(thisMap[saved.name]){
-      update[thisType + '.' + saved.name] = firebase.firestore.FieldValue.delete();
+    if(thisMap[deviceId]){
+      update[thisType + '.' + deviceId] = firebase.firestore.FieldValue.delete();
     } else {
-      update[thisType + '.' + saved.name] = true;
-      if(otherMap[saved.name]){
-        update[otherType + '.' + saved.name] = firebase.firestore.FieldValue.delete();
+      update[thisType + '.' + deviceId] = true;
+      if(otherMap[deviceId]){
+        update[otherType + '.' + deviceId] = firebase.firestore.FieldValue.delete();
       }
     }
     await commentRef.update(update);
@@ -2333,6 +2342,7 @@ function renderBanterComments(snapshot){
     return;
   }
   const saved = getSavedIdentity();
+  const deviceId = getDeviceReactionId();
   feed.innerHTML = snapshot.docs.map(doc => {
     const c = doc.data();
     const isOwn = saved && saved.name === c.name;
@@ -2344,8 +2354,8 @@ function renderBanterComments(snapshot){
     const dislikes = c.dislikes || {};
     const likeCount = Object.keys(likes).length;
     const dislikeCount = Object.keys(dislikes).length;
-    const hasLiked = saved && likes[saved.name];
-    const hasDisliked = saved && dislikes[saved.name];
+    const hasLiked = likes[deviceId];
+    const hasDisliked = dislikes[deviceId];
     return `<div class="banter-comment">
       <div class="banter-comment-head">
         <span class="banter-comment-name">${escapeHtml(c.name||'Unknown')}</span>
