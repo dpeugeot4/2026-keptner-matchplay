@@ -180,15 +180,6 @@
     background:#FFFFFF;
     color:var(--green-dark);border-radius:10px;padding:4px 12px;
     box-shadow:0 4px 16px rgba(0,0,0,0.28);
-    border:2px solid #D8362A;
-    animation:courseConditionsGlow 1.8s ease-in-out infinite;
-  }
-  @keyframes courseConditionsGlow{
-    0%, 100%{ box-shadow:0 0 0 0 rgba(216,54,42,0.8), 0 4px 16px rgba(0,0,0,0.28); transform:scale(1); }
-    50%{ box-shadow:0 0 0 26px rgba(216,54,42,0), 0 4px 16px rgba(0,0,0,0.28); transform:scale(1.06); }
-  }
-  @media (prefers-reduced-motion: reduce){
-    .status-alert{ animation:none; }
   }
   .banter-preview-box{
     display:flex;flex-direction:column;gap:10px;
@@ -251,19 +242,22 @@
   @media(max-width:640px){ .shotgun-ticker{font-size:11px;padding:8px 12px;} }
 
   .fresh-tee-card{
-    background:var(--card);border:2px solid #2FA84F;border-radius:14px;
+    /* Accent color flags "there's new info here" — change this to a fresh
+       color each time the content below is updated, so regulars notice.
+       Currently: blue (used 2026-08-28). */
+    background:var(--card);border:2px solid #2D7DD2;border-radius:14px;
     padding:22px 24px 24px;margin:0 0 32px;position:relative;
     animation:freshTeeGlow 2.2s ease-in-out infinite;
   }
-  .fresh-tee-dot{width:9px;height:9px;border-radius:50%;background:#2FA84F;flex:none;animation:freshTeeDotPulse 1.4s ease-in-out infinite;}
+  .fresh-tee-dot{width:9px;height:9px;border-radius:50%;background:#2D7DD2;flex:none;animation:freshTeeDotPulse 1.4s ease-in-out infinite;}
   .fresh-tee-subtitle{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;font-weight:700;color:var(--ink-soft);margin:0 0 16px;}
   .fresh-tee-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:11px;}
   .fresh-tee-list li{position:relative;padding-left:20px;font-size:15.5px;line-height:1.55;color:var(--ink);}
-  .fresh-tee-list li::before{content:"•";position:absolute;left:2px;top:0;color:#2FA84F;font-weight:700;font-size:18px;line-height:1.35;}
+  .fresh-tee-list li::before{content:"•";position:absolute;left:2px;top:0;color:#2D7DD2;font-weight:700;font-size:18px;line-height:1.35;}
   .fresh-tee-topic{font-weight:700;color:var(--green-dark);}
   @keyframes freshTeeGlow{
-    0%, 100%{ box-shadow:0 0 0 0 rgba(47,168,79,0.55), 0 4px 20px rgba(30,58,43,0.08); }
-    50%{ box-shadow:0 0 0 11px rgba(47,168,79,0), 0 4px 20px rgba(30,58,43,0.08); }
+    0%, 100%{ box-shadow:0 0 0 0 rgba(45,125,210,0.55), 0 4px 20px rgba(30,58,43,0.08); }
+    50%{ box-shadow:0 0 0 11px rgba(45,125,210,0), 0 4px 20px rgba(30,58,43,0.08); }
   }
   @keyframes freshTeeDotPulse{
     0%, 100%{ opacity:1; transform:scale(1); }
@@ -726,13 +720,13 @@ Extra-hole winners:
     <div class="header-right">
       <div class="hr-col">
         <div class="hr-label" id="weatherLabel">Thursday's Forecast</div>
-        <div class="weather-strip" id="weatherStrip"><div class="ws-day"><div class="ws-dow">Thu</div><div class="ws-icon">⛅</div><div class="ws-temp">87°</div><div class="ws-rain">49%</div></div></div>
+        <div class="weather-strip" id="weatherStrip"><div class="ws-day"><div class="ws-dow">Thu</div><div class="ws-icon">⛅</div><div class="ws-temp">81°</div><div class="ws-rain">20%</div></div></div>
       </div>
       <div class="hr-col hr-col-center">
         <div class="hr-label">Course Conditions</div>
         <div class="status-alert">
           <div class="ia-icon">⛳</div>
-          <div class="ia-value">🧹 Rake &amp; Place in Bunkers</div>
+          <div class="ia-value">Thursday 5:30 · Front 9</div>
         </div>
       </div>
     </div>
@@ -744,6 +738,27 @@ Extra-hole winners:
 <div class="wrap">
 
   <div id="topLeadSection"></div>
+
+  <div class="section-head" id="resultsSectionHead"><div class="tee">WRP</div><h2 id="resultsSectionTitle">Winners, Results &amp; Payouts</h2><div class="rule"></div></div>
+  <div class="results-date-picker" id="resultsDatePicker">
+    <label for="resultsDateSelect">Select week and view:</label>
+    <select id="resultsDateSelect"></select>
+  </div>
+
+
+  <div id="resultsContent">
+    <div class="recap-label">Match Play</div>
+    <div class="recap-card" id="recapMatchPlay"></div>
+
+    <div class="recap-label">Skins</div>
+    <div class="recap-card" id="recapSkins"></div>
+
+    <div class="recap-label">Pin Shots</div>
+    <div class="recap-card" id="recapPins"></div>
+
+    <div class="recap-label">Low Net Bonus</div>
+    <div class="recap-card" id="recapBonus"></div>
+  </div>
 
   <div class="section-head"><div class="tee">MP</div><h2>Match Play</h2><div class="rule"></div><button class="cb-btn gold" id="viewFullBracketBtn" style="flex:none;">Full Bracket</button></div>
   <div class="regions-grid" id="regionsGrid"><div class="region">
@@ -800,24 +815,6 @@ Extra-hole winners:
       </div>
     </div></div></div>
 
-  <div class="section-head" id="resultsSectionHead"><div class="tee">REC</div><h2 id="resultsSectionTitle">Recent Results — Select and View</h2><div class="rule"></div></div>
-  <div class="results-date-picker" id="resultsDatePicker">
-    <label for="resultsDateSelect">Browse a previous week:</label>
-    <select id="resultsDateSelect"></select>
-  </div>
-
-
-  <div id="resultsContent">
-    <div class="recap-label">Match Play</div>
-    <div class="recap-card" id="recapMatchPlay"></div>
-
-    <div class="recap-label">Skins</div>
-    <div class="recap-card" id="recapSkins"></div>
-
-    <div class="recap-label">Pin Shots</div>
-    <div class="recap-card" id="recapPins"></div>
-  </div>
-
   <div class="standings-cta" id="standingsSection">
     <div class="sc-header">2026 League Standings</div>
     <div class="sc-btn-row">
@@ -868,7 +865,7 @@ Extra-hole winners:
 <script>
 /* ============ CONFIG ============ */
 const ADMIN_PIN = "9512"; // change this before sending the file out
-/*EXPORT_DATE_START*/const EXPORT_DATE = "2026-08-27T13:30:00.000Z";/*EXPORT_DATE_END*/
+/*EXPORT_DATE_START*/const EXPORT_DATE = "2026-08-28T17:20:00.000Z";/*EXPORT_DATE_END*/
 
 /* ============ DATA MODEL ============ */
 const matches = {};
@@ -920,7 +917,7 @@ matches['sf2'] = { slots:[{source:'match',id:reg3.rfid},{source:'match',id:reg4.
 matches['championship'] = { slots:[{source:'match',id:'sf1'},{source:'match',id:'sf2'}], winner:null };
 matches['consolation'] = { slots:[{source:'match',id:'sf1',useLoser:true},{source:'match',id:'sf2',useLoser:true}], winner:null };
 
-/*INITIAL_WINNERS_START*/const INITIAL_WINNERS = {"PIA":0,"PIB":1,"reg1-r1-1":1,"reg1-r1-2":1,"reg1-r1-3":0,"reg1-r1-4":1,"reg1-r2-1":null,"reg1-r2-2":null,"reg1-rf":null,"reg2-r1-1":0,"reg2-r1-2":1,"reg2-r1-3":0,"reg2-r1-4":1,"reg2-r2-1":null,"reg2-r2-2":null,"reg2-rf":null,"reg3-r1-1":0,"reg3-r1-2":1,"reg3-r1-3":0,"reg3-r1-4":0,"reg3-r2-1":null,"reg3-r2-2":null,"reg3-rf":null,"reg4-r1-1":0,"reg4-r1-2":0,"reg4-r1-3":0,"reg4-r1-4":0,"reg4-r2-1":null,"reg4-r2-2":null,"reg4-rf":null,"sf1":null,"sf2":null,"championship":null,"consolation":null};/*INITIAL_WINNERS_END*/
+/*INITIAL_WINNERS_START*/const INITIAL_WINNERS = {"PIA":0,"PIB":1,"reg1-r1-1":1,"reg1-r1-2":1,"reg1-r1-3":0,"reg1-r1-4":1,"reg1-r2-1":1,"reg1-r2-2":0,"reg1-rf":null,"reg2-r1-1":0,"reg2-r1-2":1,"reg2-r1-3":0,"reg2-r1-4":1,"reg2-r2-1":null,"reg2-r2-2":1,"reg2-rf":null,"reg3-r1-1":0,"reg3-r1-2":1,"reg3-r1-3":0,"reg3-r1-4":0,"reg3-r2-1":null,"reg3-r2-2":0,"reg3-rf":null,"reg4-r1-1":0,"reg4-r1-2":0,"reg4-r1-3":0,"reg4-r1-4":0,"reg4-r2-1":1,"reg4-r2-2":0,"reg4-rf":null,"sf1":null,"sf2":null,"championship":null,"consolation":null};/*INITIAL_WINNERS_END*/
 Object.keys(INITIAL_WINNERS).forEach(id => { if(matches[id]) matches[id].winner = INITIAL_WINNERS[id]; });
 
 const REGIONS = [
@@ -1192,6 +1189,12 @@ function buildPinRow(name, hole, amt){
   row.innerHTML = `<span class="recap-tag">PIN</span><span class="recap-matchup"><b>${name}</b> &nbsp;<span class="ctx">— Hole ${hole}</span></span><span class="recap-score">${amt}</span>`;
   return row;
 }
+function buildBonusRow(name, detail, amt){
+  const row = document.createElement('div');
+  row.className = 'recap-row skins-row';
+  row.innerHTML = `<span class="recap-tag">BONUS</span><span class="recap-matchup"><b>${name}</b> &nbsp;<span class="ctx">— ${detail}</span></span><span class="recap-score">${amt}</span>`;
+  return row;
+}
 
 function buildFFSemi(label, matchId){
   const el = document.createElement('div');
@@ -1205,6 +1208,33 @@ function buildFFSemi(label, matchId){
 // Add a new entry at the TOP of this array each week — nothing else needs
 // to change. The dropdown and recap cards are built from this automatically.
 const RESULTS_ARCHIVE = [
+  {
+    dateKey: '2026-08-27',
+    dateLabel: 'Thursday, August 27th',
+    intro: '⛳ The Round of 16 is in the books! Six matches, six decisions — no extra holes needed this week, but plenty of statements made. Lewis pulled the upset with a 4 & 2 win over Costabile, and Wollschleger did the same to Keptner, 1-up. The Quarterfinals are set for four of the eight matches — Gilbert/Buehner and Polisena/Peugeot still have theirs to play Tuesday.',
+    matchPlay: [
+      { round:'R16', matchId:'reg1-r2-1', margin:'2 & 1', note:'' },
+      { round:'R16', matchId:'reg1-r2-2', margin:'2 up', note:'' },
+      { round:'R16', matchId:'reg2-r2-2', margin:'1 up', note:'' },
+      { round:'R16', matchId:'reg3-r2-2', margin:'2 & 1', note:'' },
+      { round:'R16', matchId:'reg4-r2-1', margin:'4 & 2', note:'' },
+      { round:'R16', matchId:'reg4-r2-2', margin:'2 & 1', note:'' },
+    ],
+    skins: [
+      { name:'Brian Haberman', detail:'Eagle on 13', amount:'$40' },
+      { name:'Michael Hallai', detail:'Double Eagle on 18', amount:'$40' },
+      { name:'Paul McHugh', detail:'Eagle on 14', amount:'$40' },
+    ],
+    pins: [
+      { name:'Frank Guarino', hole:'#11', amount:'$20' },
+      { name:'Ben Parrotta', hole:'#17', amount:'$20' },
+    ],
+    bonus: [
+      { name:'Michael Hallai', detail:'Low Net — 3-way tie at E (36)', amount:'$16.67' },
+      { name:'Bruce Rodgers', detail:'Low Net — 3-way tie at E (36)', amount:'$16.67' },
+      { name:'Matt Gdovin', detail:'Low Net — 3-way tie at E (36)', amount:'$16.66' },
+    ],
+  },
   {
     dateKey: '2026-08-20',
     dateLabel: 'Thursday, August 20th',
@@ -1260,18 +1290,20 @@ const RESULTS_ARCHIVE = [
 // right after Thursday's matches (once you've added the new entry to
 // RESULTS_ARCHIVE above), let it lead for a few days, then flip back to
 // 'upcoming' as the next round approaches. No rebuilding required either way.
-const TOP_SECTION_MODE = 'upcoming'; // 'upcoming' | 'results'
+// Fresh Off the Tee is the permanent top section — it doesn't toggle with
+// results anymore. When there's new info to flag, change the accent color
+// below (border/glow/dot/bullets) to something different from last time so
+// regulars notice something changed, rather than switching sections.
+const TOP_SECTION_MODE = 'upcoming';
 
 function renderUpcomingLeadContent(){
   return `
     <div class="section-head"><div class="tee">FOT</div><h2>Fresh Off the Tee:</h2><div class="fresh-tee-dot"></div><div class="rule"></div></div>
     <div class="fresh-tee-subtitle">News, Updates and Information</div>
     <div class="fresh-tee-card">
-      <ul class="fresh-tee-list">
-        <li><span class="fresh-tee-topic">Updated Brackets</span> — Matches and stroke allocation for Thursday Match Play.</li>
-        <li><span class="fresh-tee-topic">$50 Bonus Payout for Low Individual Net This Week</span> (scorecard tiebreaker) in addition to Skins $120 and Pins $40.</li>
-        <li><span class="fresh-tee-topic">Gilbert v Buehner &amp; Polisena v Peugeot</span> will play Tuesday @ 5:30 — due to SW league play, will likely play the front 9.</li>
-      </ul>
+      <div class="matchday-intro">
+        <p><span class="matchday-dateline">StoneWater GC, HH</span> — As dusk fell Thursday night, six Round of 16 matches wrapped up with no playoff holes needed. Arnie brought the Coffey train to a screeching halt, beating Dan 2 &amp; 1. In the "Battle of the Mikes", Mike "The Hammer" Hallai didn't just beat Leuchtag 2 &amp; 1 — he grabbed a skin and low net honors as well with the statement performance of the evening. Bobby Lewis delivered the night's loudest blow, with a commanding win over Greg Costabile 4 &amp; 2. Andy Wollschleger dodged flying drivers on 18 to close out the Commish 1-up in the much anticipated "Battle of the Beers", while Matt "The Fix" Gdovin backed his own bet edging out Brian Haberman at the end, 2 &amp; 1. To close the evening, Big Bruce Rodgers made a definitive statement with a mic-dropping bomb for par in the fading light against last year's runner-up, Anton, to win 2 up. Gdovin now waits on the winner of Polisena v Peugeot, while Wollschleger awaits the winner of Gilbert v Buehner — both will be decided Tuesday @ 5:30 to complete the Quarterfinal field.</p>
+      </div>
     </div>
   `;
 }
@@ -1308,7 +1340,7 @@ function renderTopLeadSection(){
 
 function renderResultsForDate(dateKey){
   const round = RESULTS_ARCHIVE.find(r => r.dateKey === dateKey) || RESULTS_ARCHIVE[0];
-  document.getElementById('resultsSectionTitle').textContent = 'Recent Results — ' + round.dateLabel;
+  document.getElementById('resultsSectionTitle').textContent = 'Winners, Results & Payouts';
 
   const recapMP = document.getElementById('recapMatchPlay');
   recapMP.innerHTML = '';
@@ -1321,6 +1353,18 @@ function renderResultsForDate(dateKey){
   const recapPins = document.getElementById('recapPins');
   recapPins.innerHTML = '';
   round.pins.forEach(p => recapPins.appendChild(buildPinRow(p.name, p.hole, p.amount)));
+
+  const recapBonus = document.getElementById('recapBonus');
+  recapBonus.innerHTML = '';
+  const bonusLabelEl = document.getElementById('recapBonus').previousElementSibling;
+  if(round.bonus && round.bonus.length){
+    bonusLabelEl.style.display = '';
+    recapBonus.style.display = '';
+    round.bonus.forEach(b => recapBonus.appendChild(buildBonusRow(b.name, b.detail, b.amount)));
+  } else {
+    bonusLabelEl.style.display = 'none';
+    recapBonus.style.display = 'none';
+  }
 }
 
 function showResultsPrompt(){
@@ -1339,9 +1383,17 @@ function initResultsDatePicker(){
     else { showResultsPrompt(); }
   });
 
-  // Collapsed by default — condenses the page. The person picks a week to expand it.
-  select.value = '';
-  showResultsPrompt();
+  // Default: expanded, showing the most recent week, with that week already
+  // selected in the dropdown so it's obvious what's being shown. Leave this
+  // as the default until told to switch back to the collapsed/prompt state.
+  if(RESULTS_ARCHIVE.length){
+    select.value = RESULTS_ARCHIVE[0].dateKey;
+    showResultsContent();
+    renderResultsForDate(RESULTS_ARCHIVE[0].dateKey);
+  } else {
+    select.value = '';
+    showResultsPrompt();
+  }
 }
 
 /* ============ MAIN RENDER ============ */
@@ -2567,7 +2619,7 @@ document.getElementById('banterPostBtn').addEventListener('click', postBanterCom
 const WEATHER_DATA = {
   Fri:{icon:'⛅',temp:83,rain:25}, Sat:{icon:'⛅',temp:83,rain:20}, Sun:{icon:'🌧️',temp:81,rain:85},
   Mon:{icon:'⛅',temp:76,rain:25}, Tue:{icon:'☀️',temp:80,rain:0}, Wed:{icon:'☀️',temp:83,rain:10},
-  Thu:{icon:'⛅',temp:87,rain:49}
+  Thu:{icon:'⛅',temp:81,rain:20}
 };
 function renderWeatherWidget(){
   const dayAbbrevs = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
@@ -2575,7 +2627,7 @@ function renderWeatherWidget(){
   const d = WEATHER_DATA.Thu; // always the round-day forecast — today's if it's Thursday, otherwise the upcoming one
   document.getElementById('weatherLabel').textContent = isThursday ? "Today's Forecast" : "Thursday's Forecast";
   document.getElementById('weatherStrip').innerHTML =
-    `<div class="ws-day"><div class="ws-dow">${isThursday ? 'Today' : '8/27'}</div><div class="ws-icon">${d.icon}</div><div class="ws-temp">${d.temp}°</div><div class="ws-rain">${d.rain}%</div></div>`;
+    `<div class="ws-day"><div class="ws-dow">${isThursday ? 'Today' : '9/3'}</div><div class="ws-icon">${d.icon}</div><div class="ws-temp">${d.temp}°</div><div class="ws-rain">${d.rain}%</div></div>`;
 }
 renderWeatherWidget();
 
