@@ -244,20 +244,26 @@
   .fresh-tee-card{
     /* Accent color flags "there's new info here" — change this to a fresh
        color each time the content below is updated, so regulars notice.
-       Currently: blue (used 2026-08-28). */
-    background:var(--card);border:2px solid #2D7DD2;border-radius:14px;
+       Currently: red (used 2026-09-01). */
+    background:var(--card);border:2px solid #D8362A;border-radius:14px;
     padding:22px 24px 24px;margin:0 0 32px;position:relative;
     animation:freshTeeGlow 2.2s ease-in-out infinite;
   }
-  .fresh-tee-dot{width:9px;height:9px;border-radius:50%;background:#2D7DD2;flex:none;animation:freshTeeDotPulse 1.4s ease-in-out infinite;}
+  .story-card{
+    /* Plain, non-glowing card — for content that's no longer "new", like a
+       results recap that's since been superseded by fresher news above it. */
+    background:var(--card);border:1px solid var(--card-border);border-radius:14px;
+    padding:22px 24px 24px;margin:0 0 32px;box-shadow:var(--shadow);
+  }
+  .fresh-tee-dot{width:9px;height:9px;border-radius:50%;background:#D8362A;flex:none;animation:freshTeeDotPulse 1.4s ease-in-out infinite;}
   .fresh-tee-subtitle{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;font-weight:700;color:var(--ink-soft);margin:0 0 16px;}
   .fresh-tee-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:11px;}
   .fresh-tee-list li{position:relative;padding-left:20px;font-size:15.5px;line-height:1.55;color:var(--ink);}
-  .fresh-tee-list li::before{content:"•";position:absolute;left:2px;top:0;color:#2D7DD2;font-weight:700;font-size:18px;line-height:1.35;}
+  .fresh-tee-list li::before{content:"•";position:absolute;left:2px;top:0;color:#D8362A;font-weight:700;font-size:18px;line-height:1.35;}
   .fresh-tee-topic{font-weight:700;color:var(--green-dark);}
   @keyframes freshTeeGlow{
-    0%, 100%{ box-shadow:0 0 0 0 rgba(45,125,210,0.55), 0 4px 20px rgba(30,58,43,0.08); }
-    50%{ box-shadow:0 0 0 11px rgba(45,125,210,0), 0 4px 20px rgba(30,58,43,0.08); }
+    0%, 100%{ box-shadow:0 0 0 0 rgba(216,54,42,0.55), 0 4px 20px rgba(30,58,43,0.08); }
+    50%{ box-shadow:0 0 0 11px rgba(216,54,42,0), 0 4px 20px rgba(30,58,43,0.08); }
   }
   @keyframes freshTeeDotPulse{
     0%, 100%{ opacity:1; transform:scale(1); }
@@ -269,6 +275,11 @@
   }
 
   .story-headline{font-family:'Fraunces',serif;font-weight:700;font-size:21px;letter-spacing:-0.01em;line-height:1.15;color:var(--ink);margin:0 0 14px;}
+  .story-headline.stacked{margin-top:24px;}
+  .story-blurb{font-family:'Inter',sans-serif;font-size:15.5px;line-height:1.55;color:var(--ink);margin:0 0 4px;}
+  .story-blurb a{color:var(--green-mid);font-weight:600;text-decoration:underline;text-underline-offset:2px;}
+  .story-blurb a:hover{color:var(--green-dark);}
+  .story-blurb strong{color:var(--green-mid);}
   .matchday-intro{background:var(--card);border:1px solid var(--card-border);border-radius:10px;padding:16px 18px;box-shadow:var(--shadow);font-size:17px;font-weight:400;line-height:1.6;color:var(--ink);}
   .matchday-dateline{font-weight:700;text-transform:uppercase;}
   .matchday-intro strong{color:var(--green-mid);}
@@ -721,13 +732,13 @@ Extra-hole winners:
     <div class="header-right">
       <div class="hr-col">
         <div class="hr-label" id="weatherLabel">Thursday's Forecast</div>
-        <div class="weather-strip" id="weatherStrip"><div class="ws-day"><div class="ws-dow">Thu</div><div class="ws-icon">⛅</div><div class="ws-temp">81°</div><div class="ws-rain">20%</div></div></div>
+        <div class="weather-strip" id="weatherStrip"><div class="ws-day"><div class="ws-dow">Thu</div><div class="ws-icon">⛅</div><div class="ws-temp">80°</div><div class="ws-rain">15%</div></div></div>
       </div>
       <div class="hr-col hr-col-center">
         <div class="hr-label">Course Conditions</div>
         <div class="status-alert">
           <div class="ia-icon">⛳</div>
-          <div class="ia-value">Thursday 5:30 · Front 9</div>
+          <div class="ia-value">TBD Thursday 5:30 · Front 9</div>
         </div>
       </div>
     </div>
@@ -866,7 +877,7 @@ Extra-hole winners:
 <script>
 /* ============ CONFIG ============ */
 const ADMIN_PIN = "9512"; // change this before sending the file out
-/*EXPORT_DATE_START*/const EXPORT_DATE = "2026-08-28T17:30:00.000Z";/*EXPORT_DATE_END*/
+/*EXPORT_DATE_START*/const EXPORT_DATE = "2026-09-01T18:55:00.000Z";/*EXPORT_DATE_END*/
 
 /* ============ DATA MODEL ============ */
 const matches = {};
@@ -951,8 +962,11 @@ function setWinner(matchId, idx){
 
 const STROKES_DATA = {
   // Round of 16 (8/27) — played on the BACK nine (holes 10-18) from the
-  // Whites. Read directly off the official printed scorecards (dots per
-  // hole per player) — this is the final source of truth, not calculated.
+  // Whites, EXCEPT reg2-r2-1 and reg3-r2-1 (Gilbert v Buehner, Polisena v
+  // Peugeot) — those two got pushed to Tuesday 9/1 due to a scheduling
+  // conflict and played the FRONT nine instead, so their holes are 1-9.
+  // Read directly off the official printed scorecards (dots per hole per
+  // player) — this is the final source of truth, not calculated.
   // Bruce Rodgers isn't listed: the official card shows 0 strokes for
   // that match.
   //
@@ -961,9 +975,9 @@ const STROKES_DATA = {
   // at all once Round 1 is over), so this keeps a badge from leaking into
   // the wrong box just because the same name appears in both.
   'reg1-r2-1': { 'Dan Coffey': [13,15,16,18] },
-  'reg2-r2-1': { },
+  'reg2-r2-1': { 'Greg Buehner': [1,4,9] },
   'reg2-r2-2': { 'Jeff Keptner': [13,18] },
-  'reg3-r2-1': { },
+  'reg3-r2-1': { 'Frank Polisena': [1,4,9] },
   'reg3-r2-2': { 'Brian Haberman': [10,12,13,15,16,17,18] },
   'reg4-r2-1': { 'Robert Lewis': [13] },
   'reg4-r2-2': { 'Michael Hallai': [12,13,15,16,18] },
@@ -973,8 +987,8 @@ const STROKES_DATA = {
 // e.g. it's still undecided which 9 they'll play. Shows a "TBD" badge instead
 // of a hole count until STROKES_DATA above has the real answer.
 const TBD_STROKES = {
-  'reg2-r2-1': 'Greg Buehner',
-  'reg3-r2-1': 'Frank Polisena',
+  // Both matches that used to be TBD (Gilbert v Buehner, Polisena v Peugeot)
+  // are now resolved — see STROKES_DATA above.
 };
 
 /* ============ RENDER HELPERS ============ */
@@ -1302,6 +1316,14 @@ function renderUpcomingLeadContent(){
     <div class="section-head"><div class="tee">FOT</div><h2>Fresh Off the Tee:</h2><div class="fresh-tee-dot"></div><div class="rule"></div></div>
     <div class="fresh-tee-subtitle">News, Updates and Information</div>
     <div class="fresh-tee-card">
+      <h3 class="story-headline">Tuesday: Live on Golf Genius: Round of 16 Makeup Matches</h3>
+      <p class="story-blurb">Polisena v Peugeot and Gilbert v Buehner tee off @ 5:30 pm Tuesday to complete the Round of 16 field — follow along live in Golf Genius: <a href="https://www.golfgenius.com/v2tournaments/13025304389307346784?called_from=v2tournaments&amp;hide_totals=false&amp;player_stats_for_portal=false&amp;round_index=17" target="_blank" rel="noopener">Round 17 - Rd 16 Make-Up Matches</a></p>
+
+      <h3 class="story-headline stacked">Thursday: Round of 8 Match Play</h3>
+      <p class="story-blurb">Quarterfinal action returns Thursday, with a $50 Low Net bonus plus Skins and Pins in play for all players. <strong>Don't forget to RSVP today in Golf Genius for Round 18!</strong></p>
+    </div>
+
+    <div class="story-card">
       <h3 class="story-headline">Round of 16 Match Play Results</h3>
       <div class="matchday-intro">
         <p><span class="matchday-dateline">StoneWater GC, HH</span> — As dusk fell Thursday night, six Round of 16 matches wrapped up with no playoff holes needed. Arnie brought the Coffey train to a screeching halt, beating Dan 2 &amp; 1. In the "Battle of the Mikes", Mike "The Hammer" Hallai didn't just beat Leuchtag 2 &amp; 1 — he grabbed a skin and low net honors as well with the statement performance of the evening. Bobby Lewis delivered the night's loudest blow, with a commanding win over Greg Costabile 4 &amp; 2. Andy Wollschleger dodged flying drivers on 18 to close out the Commish 1-up in the much anticipated "Battle of the Beers", while Matt "The Fix" Gdovin backed his own bet edging out Brian Haberman at the end, 2 &amp; 1. To close the evening, Big Bruce Rodgers made a definitive statement with a mic-dropping bomb for par in the fading light against last year's runner-up, Anton, to win 2 up. Gdovin now waits on the winner of Polisena v Peugeot, while Wollschleger awaits the winner of Gilbert v Buehner — both will be decided Tuesday @ 5:30 to complete the Quarterfinal field.</p>
@@ -2621,7 +2643,7 @@ document.getElementById('banterPostBtn').addEventListener('click', postBanterCom
 const WEATHER_DATA = {
   Fri:{icon:'⛅',temp:83,rain:25}, Sat:{icon:'⛅',temp:83,rain:20}, Sun:{icon:'🌧️',temp:81,rain:85},
   Mon:{icon:'⛅',temp:76,rain:25}, Tue:{icon:'☀️',temp:80,rain:0}, Wed:{icon:'☀️',temp:83,rain:10},
-  Thu:{icon:'⛅',temp:81,rain:20}
+  Thu:{icon:'⛅',temp:80,rain:15}
 };
 function renderWeatherWidget(){
   const dayAbbrevs = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
