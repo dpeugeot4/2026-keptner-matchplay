@@ -244,8 +244,8 @@
   .fresh-tee-card{
     /* Accent color flags "there's new info here" — change this to a fresh
        color each time the content below is updated, so regulars notice.
-       Currently: red (used 2026-09-01). */
-    background:var(--card);border:2px solid #D8362A;border-radius:14px;
+       Currently: blue (used 2026-09-03). */
+    background:var(--card);border:2px solid #2D7DD2;border-radius:14px;
     padding:22px 24px 24px;margin:0 0 32px;position:relative;
     animation:freshTeeGlow 2.2s ease-in-out infinite;
   }
@@ -255,15 +255,15 @@
     background:var(--card);border:1px solid var(--card-border);border-radius:14px;
     padding:22px 24px 24px;margin:0 0 32px;box-shadow:var(--shadow);
   }
-  .fresh-tee-dot{width:9px;height:9px;border-radius:50%;background:#D8362A;flex:none;animation:freshTeeDotPulse 1.4s ease-in-out infinite;}
+  .fresh-tee-dot{width:9px;height:9px;border-radius:50%;background:#2D7DD2;flex:none;animation:freshTeeDotPulse 1.4s ease-in-out infinite;}
   .fresh-tee-subtitle{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;font-weight:700;color:var(--ink-soft);margin:0 0 16px;}
   .fresh-tee-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:11px;}
   .fresh-tee-list li{position:relative;padding-left:20px;font-size:15.5px;line-height:1.55;color:var(--ink);}
-  .fresh-tee-list li::before{content:"•";position:absolute;left:2px;top:0;color:#D8362A;font-weight:700;font-size:18px;line-height:1.35;}
+  .fresh-tee-list li::before{content:"•";position:absolute;left:2px;top:0;color:#2D7DD2;font-weight:700;font-size:18px;line-height:1.35;}
   .fresh-tee-topic{font-weight:700;color:var(--green-dark);}
   @keyframes freshTeeGlow{
-    0%, 100%{ box-shadow:0 0 0 0 rgba(216,54,42,0.55), 0 4px 20px rgba(30,58,43,0.08); }
-    50%{ box-shadow:0 0 0 11px rgba(216,54,42,0), 0 4px 20px rgba(30,58,43,0.08); }
+    0%, 100%{ box-shadow:0 0 0 0 rgba(45,125,210,0.55), 0 4px 20px rgba(30,58,43,0.08); }
+    50%{ box-shadow:0 0 0 11px rgba(45,125,210,0), 0 4px 20px rgba(30,58,43,0.08); }
   }
   @keyframes freshTeeDotPulse{
     0%, 100%{ opacity:1; transform:scale(1); }
@@ -276,8 +276,17 @@
 
   .story-headline{font-family:'Fraunces',serif;font-weight:700;font-size:21px;letter-spacing:-0.01em;line-height:1.15;color:var(--ink);margin:0 0 14px;}
   .story-headline.stacked{margin-top:24px;}
+  .story-headline-normal{font-family:'Inter',sans-serif;font-weight:400;font-size:17px;line-height:1.6;}
   .story-blurb{font-family:'Inter',sans-serif;font-size:15.5px;line-height:1.55;color:var(--ink);margin:0 0 4px;}
   .story-blurb a{color:var(--green-mid);font-weight:600;text-decoration:underline;text-underline-offset:2px;}
+  .pairings-list{list-style:none;margin:16px 0 0;padding:0;display:flex;flex-direction:column;gap:8px;}
+  .pairings-row{font-family:'Inter',sans-serif;font-size:15px;color:var(--ink);padding:9px 12px;border-radius:8px;background:#FFFFFF;border:1.5px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;gap:9px;}
+  .pairings-row.match-play{background:#EAF6EC;border-left:3px solid #2FA84F;}
+  .pairings-tag{margin-left:auto;flex:none;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:#2FA84F;font-weight:700;}
+  @media(max-width:640px){
+    .pairings-row{font-size:13px;padding:8px 10px;gap:5px 7px;}
+    .pairings-tag{margin-left:0;flex-basis:100%;}
+  }
   .story-blurb a:hover{color:var(--green-dark);}
   .story-blurb strong{color:var(--green-mid);}
   .matchday-intro{background:var(--card);border:1px solid var(--card-border);border-radius:10px;padding:16px 18px;box-shadow:var(--shadow);font-size:17px;font-weight:400;line-height:1.6;color:var(--ink);}
@@ -732,13 +741,13 @@ Extra-hole winners:
     <div class="header-right">
       <div class="hr-col">
         <div class="hr-label" id="weatherLabel">Thursday's Forecast</div>
-        <div class="weather-strip" id="weatherStrip"><div class="ws-day"><div class="ws-dow">Thu</div><div class="ws-icon">⛅</div><div class="ws-temp">80°</div><div class="ws-rain">15%</div></div></div>
+        <div class="weather-strip" id="weatherStrip"><div class="ws-day"><div class="ws-dow">Thu</div><div class="ws-icon">🌧️</div><div class="ws-temp">82°</div><div class="ws-rain">75%</div></div></div>
       </div>
       <div class="hr-col hr-col-center">
         <div class="hr-label">Course Conditions</div>
         <div class="status-alert">
           <div class="ia-icon">⛳</div>
-          <div class="ia-value">TBD Thursday 5:30 · Front 9</div>
+          <div class="ia-value">Front 9 · TBD · Rake &amp; Place in Bunkers</div>
         </div>
       </div>
     </div>
@@ -750,27 +759,6 @@ Extra-hole winners:
 <div class="wrap">
 
   <div id="topLeadSection"></div>
-
-  <div class="section-head" id="resultsSectionHead"><div class="tee">WRP</div><h2 id="resultsSectionTitle">Winners, Results &amp; Payouts</h2><div class="rule"></div></div>
-  <div class="results-date-picker" id="resultsDatePicker">
-    <label for="resultsDateSelect">Select week and view:</label>
-    <select id="resultsDateSelect"></select>
-  </div>
-
-
-  <div id="resultsContent">
-    <div class="recap-label">Match Play</div>
-    <div class="recap-card" id="recapMatchPlay"></div>
-
-    <div class="recap-label">Skins</div>
-    <div class="recap-card" id="recapSkins"></div>
-
-    <div class="recap-label">Pin Shots</div>
-    <div class="recap-card" id="recapPins"></div>
-
-    <div class="recap-label">Low Net Bonus</div>
-    <div class="recap-card" id="recapBonus"></div>
-  </div>
 
   <div class="section-head"><div class="tee">MP</div><h2>Match Play</h2><div class="rule"></div><button class="cb-btn gold" id="viewFullBracketBtn" style="flex:none;">Full Bracket</button></div>
   <div class="regions-grid" id="regionsGrid"><div class="region">
@@ -827,6 +815,27 @@ Extra-hole winners:
       </div>
     </div></div></div>
 
+  <div class="section-head" id="resultsSectionHead"><div class="tee">WRP</div><h2 id="resultsSectionTitle">Winners, Results &amp; Payouts</h2><div class="rule"></div></div>
+  <div class="results-date-picker" id="resultsDatePicker">
+    <label for="resultsDateSelect">Select week and view:</label>
+    <select id="resultsDateSelect"></select>
+  </div>
+
+
+  <div id="resultsContent">
+    <div class="recap-label">Match Play</div>
+    <div class="recap-card" id="recapMatchPlay"></div>
+
+    <div class="recap-label">Skins</div>
+    <div class="recap-card" id="recapSkins"></div>
+
+    <div class="recap-label">Pin Shots</div>
+    <div class="recap-card" id="recapPins"></div>
+
+    <div class="recap-label">Low Net Bonus</div>
+    <div class="recap-card" id="recapBonus"></div>
+  </div>
+
   <div class="standings-cta" id="standingsSection">
     <div class="sc-header">2026 League Standings</div>
     <div class="sc-btn-row">
@@ -877,7 +886,7 @@ Extra-hole winners:
 <script>
 /* ============ CONFIG ============ */
 const ADMIN_PIN = "9512"; // change this before sending the file out
-/*EXPORT_DATE_START*/const EXPORT_DATE = "2026-09-01T18:55:00.000Z";/*EXPORT_DATE_END*/
+/*EXPORT_DATE_START*/const EXPORT_DATE = "2026-09-03T17:40:00.000Z";/*EXPORT_DATE_END*/
 
 /* ============ DATA MODEL ============ */
 const matches = {};
@@ -901,26 +910,26 @@ matches['PIB'] = { slots:[{seed:'31',name:'Angelo Fappiano',hcp:'34.2'},{seed:'3
 
 const reg1 = buildRegionMatches('reg1', [
   [{seed:'1',name:'Paul McHugh',hcp:'18.4'},{source:'match',id:'PIA'}],
-  [{seed:'16',name:'Ben Greenberg',hcp:'13.6'},{seed:'17',name:'Arnie Hallai',hcp:'22.7'}],
+  [{seed:'16',name:'Ben Greenberg',hcp:'13.6'},{seed:'17',name:'Arnie Hallai',hcp:'23.1'}],
   [{seed:'8',name:'Bruce Rodgers',hcp:'17.8'},{seed:'25',name:'Eric Mohre',hcp:'19.7'}],
   [{seed:'9',name:'Justin Keptner',hcp:'23.2'},{seed:'24',name:'Anton Dushaj',hcp:'17.2'}],
 ]);
 const reg2 = buildRegionMatches('reg2', [
-  [{seed:'4',name:'Greg Buehner',hcp:'13.4'},{seed:'29',name:'John Gaspar',hcp:'19.6'}],
+  [{seed:'4',name:'Greg Buehner',hcp:'13.5'},{seed:'29',name:'John Gaspar',hcp:'19.6'}],
   [{seed:'13',name:'Frank Dilalla',hcp:'21.3'},{seed:'20',name:'Bob Gilbert',hcp:'8.3'}],
   [{seed:'5',name:'Jeff Keptner',hcp:'24.9'},{seed:'28',name:'Steven Andrzejczyk',hcp:'13.5'}],
-  [{seed:'12',name:'Larry Guarino',hcp:'20.2'},{seed:'21',name:'Andrew Wollschleger',hcp:'21.4'}],
+  [{seed:'12',name:'Larry Guarino',hcp:'20.2'},{seed:'21',name:'Andrew Wollschleger',hcp:'20.9'}],
 ]);
 const reg3 = buildRegionMatches('reg3', [
   [{seed:'2',name:'Frank Polisena',hcp:'16.1'},{source:'match',id:'PIB'}],
-  [{seed:'15',name:'Ben Parrotta',hcp:'11.7'},{seed:'18',name:'Dustin Peugeot',hcp:'11.5'}],
-  [{seed:'7',name:'Matt Gdovin',hcp:'11.6'},{seed:'26',name:'John Spiccia',hcp:'18.4'}],
+  [{seed:'15',name:'Ben Parrotta',hcp:'11.7'},{seed:'18',name:'Dustin Peugeot',hcp:'12.3'}],
+  [{seed:'7',name:'Matt Gdovin',hcp:'11.4'},{seed:'26',name:'John Spiccia',hcp:'18.4'}],
   [{seed:'10',name:'Brian Haberman',hcp:'23.1'},{seed:'23',name:'Jack Wu',hcp:'25.7'}],
 ]);
 const reg4 = buildRegionMatches('reg4', [
   [{seed:'3',name:'Greg Costabile',hcp:'17.9'},{seed:'30',name:'Vincent Culotta',hcp:'21.4'}],
-  [{seed:'14',name:'Robert Lewis',hcp:'19.7'},{seed:'19',name:'Don Haines',hcp:'16.5'}],
-  [{seed:'6',name:'Michael Hallai',hcp:'22.2'},{seed:'27',name:'Matt Gaspar',hcp:'22.0'}],
+  [{seed:'14',name:'Robert Lewis',hcp:'19.6'},{seed:'19',name:'Don Haines',hcp:'16.5'}],
+  [{seed:'6',name:'Michael Hallai',hcp:'22.5'},{seed:'27',name:'Matt Gaspar',hcp:'22.0'}],
   [{seed:'11',name:'Michael Leuchtag',hcp:'13.4'},{seed:'22',name:'Frank Guarino',hcp:'5.4'}],
 ]);
 
@@ -929,7 +938,7 @@ matches['sf2'] = { slots:[{source:'match',id:reg3.rfid},{source:'match',id:reg4.
 matches['championship'] = { slots:[{source:'match',id:'sf1'},{source:'match',id:'sf2'}], winner:null };
 matches['consolation'] = { slots:[{source:'match',id:'sf1',useLoser:true},{source:'match',id:'sf2',useLoser:true}], winner:null };
 
-/*INITIAL_WINNERS_START*/const INITIAL_WINNERS = {"PIA":0,"PIB":1,"reg1-r1-1":1,"reg1-r1-2":1,"reg1-r1-3":0,"reg1-r1-4":1,"reg1-r2-1":1,"reg1-r2-2":0,"reg1-rf":null,"reg2-r1-1":0,"reg2-r1-2":1,"reg2-r1-3":0,"reg2-r1-4":1,"reg2-r2-1":null,"reg2-r2-2":1,"reg2-rf":null,"reg3-r1-1":0,"reg3-r1-2":1,"reg3-r1-3":0,"reg3-r1-4":0,"reg3-r2-1":null,"reg3-r2-2":0,"reg3-rf":null,"reg4-r1-1":0,"reg4-r1-2":0,"reg4-r1-3":0,"reg4-r1-4":0,"reg4-r2-1":1,"reg4-r2-2":0,"reg4-rf":null,"sf1":null,"sf2":null,"championship":null,"consolation":null};/*INITIAL_WINNERS_END*/
+/*INITIAL_WINNERS_START*/const INITIAL_WINNERS = {"PIA":0,"PIB":1,"reg1-r1-1":1,"reg1-r1-2":1,"reg1-r1-3":0,"reg1-r1-4":1,"reg1-r2-1":1,"reg1-r2-2":0,"reg1-rf":null,"reg2-r1-1":0,"reg2-r1-2":1,"reg2-r1-3":0,"reg2-r1-4":1,"reg2-r2-1":0,"reg2-r2-2":1,"reg2-rf":null,"reg3-r1-1":0,"reg3-r1-2":1,"reg3-r1-3":0,"reg3-r1-4":0,"reg3-r2-1":1,"reg3-r2-2":0,"reg3-rf":null,"reg4-r1-1":0,"reg4-r1-2":0,"reg4-r1-3":0,"reg4-r1-4":0,"reg4-r2-1":1,"reg4-r2-2":0,"reg4-rf":null,"sf1":null,"sf2":null,"championship":null,"consolation":null};/*INITIAL_WINNERS_END*/
 Object.keys(INITIAL_WINNERS).forEach(id => { if(matches[id]) matches[id].winner = INITIAL_WINNERS[id]; });
 
 const REGIONS = [
@@ -981,6 +990,14 @@ const STROKES_DATA = {
   'reg3-r2-2': { 'Brian Haberman': [10,12,13,15,16,17,18] },
   'reg4-r2-1': { 'Robert Lewis': [13] },
   'reg4-r2-2': { 'Michael Hallai': [12,13,15,16,18] },
+
+  // Round of 8 (9/3) — played on the FRONT nine (holes 1-9). Read directly
+  // off the official scorecards, verified against Course Handicap math
+  // using the 9/2 handicap update (effective 9/3).
+  'reg1-rf': { 'Arnie Hallai': [1,2,4,9] },
+  'reg2-rf': { 'Andrew Wollschleger': [1,2,4,9] },
+  'reg3-rf': { 'Dustin Peugeot': [1] },
+  'reg4-rf': { 'Michael Hallai': [1,9] },
 };
 
 // Matches where we know a player will get strokes but not which holes yet —
@@ -1226,11 +1243,13 @@ const RESULTS_ARCHIVE = [
   {
     dateKey: '2026-08-27',
     dateLabel: 'Thursday, August 27th',
-    intro: '⛳ The Round of 16 is in the books! Six matches, six decisions — no extra holes needed this week, but plenty of statements made. Lewis pulled the upset with a 4 & 2 win over Costabile, and Wollschleger did the same to Keptner, 1-up. The Quarterfinals are set for four of the eight matches — Gilbert/Buehner and Polisena/Peugeot still have theirs to play Tuesday.',
+    intro: '⛳ The Round of 16 is in the books! Eight matches, eight decisions — no extra holes needed. Lewis pulled the upset with a 4 & 2 win over Costabile, and Wollschleger did the same to Keptner, 1-up. Buehner and Peugeot closed out the final two matches Tuesday to complete the field.',
     matchPlay: [
       { round:'R16', matchId:'reg1-r2-1', margin:'2 & 1', note:'' },
       { round:'R16', matchId:'reg1-r2-2', margin:'2 up', note:'' },
+      { round:'R16', matchId:'reg2-r2-1', margin:'1 up', note:'' },
       { round:'R16', matchId:'reg2-r2-2', margin:'1 up', note:'' },
+      { round:'R16', matchId:'reg3-r2-1', margin:'3 & 2', note:'' },
       { round:'R16', matchId:'reg3-r2-2', margin:'2 & 1', note:'' },
       { round:'R16', matchId:'reg4-r2-1', margin:'4 & 2', note:'' },
       { round:'R16', matchId:'reg4-r2-2', margin:'2 & 1', note:'' },
@@ -1316,18 +1335,20 @@ function renderUpcomingLeadContent(){
     <div class="section-head"><div class="tee">FOT</div><h2>Fresh Off the Tee:</h2><div class="fresh-tee-dot"></div><div class="rule"></div></div>
     <div class="fresh-tee-subtitle">News, Updates and Information</div>
     <div class="fresh-tee-card">
-      <h3 class="story-headline">Tuesday: Live on Golf Genius: Round of 16 Makeup Matches</h3>
-      <p class="story-blurb">Polisena v Peugeot and Gilbert v Buehner tee off @ 5:30 pm Tuesday to complete the Round of 16 field — follow along live in Golf Genius: <a href="https://www.golfgenius.com/v2tournaments/13025304389307346784?called_from=v2tournaments&amp;hide_totals=false&amp;player_stats_for_portal=false&amp;round_index=17" target="_blank" rel="noopener">Round 17 - Rd 16 Make-Up Matches</a></p>
+      <h3 class="story-headline">The Round of 16 is Complete <span class="story-headline-normal">— Greg Buehner edged Bob Gilbert 1-up, and Dustin Peugeot got past Frank Polisena 3 &amp; 2. Quarterfinal action Thursday, with a $50 Low Net bonus plus Skins and Pins in play for all players.</span></h3>
 
-      <h3 class="story-headline stacked">Thursday: Round of 8 Match Play</h3>
-      <p class="story-blurb">Quarterfinal action returns Thursday, with a $50 Low Net bonus plus Skins and Pins in play for all players. <strong>Don't forget to RSVP today in Golf Genius for Round 18!</strong></p>
-    </div>
+      <h3 class="story-headline stacked">Elite 8 Action Thursday <span class="story-headline-normal">— Four win-or-go-home matches, one shot at the semis. Every swing from here carries championship weight. Three past champions, five players looking to etch their names in immortality. Possible rain in the forecast — any horse can run on a dry track, but only certain horses can win in the mud. Saddle up, here we go!</span></h3>
 
-    <div class="story-card">
-      <h3 class="story-headline">Round of 16 Match Play Results</h3>
-      <div class="matchday-intro">
-        <p><span class="matchday-dateline">StoneWater GC, HH</span> — As dusk fell Thursday night, six Round of 16 matches wrapped up with no playoff holes needed. Arnie brought the Coffey train to a screeching halt, beating Dan 2 &amp; 1. In the "Battle of the Mikes", Mike "The Hammer" Hallai didn't just beat Leuchtag 2 &amp; 1 — he grabbed a skin and low net honors as well with the statement performance of the evening. Bobby Lewis delivered the night's loudest blow, with a commanding win over Greg Costabile 4 &amp; 2. Andy Wollschleger dodged flying drivers on 18 to close out the Commish 1-up in the much anticipated "Battle of the Beers", while Matt "The Fix" Gdovin backed his own bet edging out Brian Haberman at the end, 2 &amp; 1. To close the evening, Big Bruce Rodgers made a definitive statement with a mic-dropping bomb for par in the fading light against last year's runner-up, Anton, to win 2 up. Gdovin now waits on the winner of Polisena v Peugeot, while Wollschleger awaits the winner of Gilbert v Buehner — both will be decided Tuesday @ 5:30 to complete the Quarterfinal field.</p>
-      </div>
+      <h3 class="story-headline stacked">Thursday's Pairings — <span class="story-headline-normal">(As seen in Golf Genius)</span></h3>
+      <ul class="pairings-list">
+        <li class="pairings-row match-play">🛺 A. Hallai <span class="hcp">(23.1)</span>, Buehner <span class="hcp">(13.5)</span>, Rodgers <span class="hcp">(17.8)</span>, Wollschleger <span class="hcp">(20.9)</span> <span class="pairings-tag">Match Play</span></li>
+        <li class="pairings-row match-play">🛺 Peugeot <span class="hcp">(12.3)</span>, M. Hallai <span class="hcp">(22.5)</span>, Gdovin <span class="hcp">(11.4)</span>, Lewis <span class="hcp">(19.6)</span> <span class="pairings-tag">Match Play</span></li>
+        <li class="pairings-row">🛺 Parrotta <span class="hcp">(11.1)</span>, Gilbert <span class="hcp">(9.1)</span>, F. Guarino <span class="hcp">(5.4)</span>, Dushaj <span class="hcp">(17.2)</span></li>
+        <li class="pairings-row">🛺 Gaspar <span class="hcp">(19.6)</span>, Spiccia <span class="hcp">(19.3)</span>, Keptner <span class="hcp">(24.7)</span>, McHugh <span class="hcp">(18.8)</span></li>
+        <li class="pairings-row">🛺 Leuchtag <span class="hcp">(14.1)</span>, Cambareri <span class="hcp">(18.0)</span>, Wu <span class="hcp">(25.7)</span>, Andrzejczyk <span class="hcp">(13.7)</span></li>
+        <li class="pairings-row">🛺 Fappiano <span class="hcp">(34.2)</span>, Coffey <span class="hcp">(31.2)</span>, Haberman <span class="hcp">(23.1)</span>, L. Guarino <span class="hcp">(20.4)</span></li>
+        <li class="pairings-row">🛺 Greenberg <span class="hcp">(13.7)</span>, Paglia <span class="hcp">(14.7)</span></li>
+      </ul>
     </div>
   `;
 }
@@ -1407,17 +1428,9 @@ function initResultsDatePicker(){
     else { showResultsPrompt(); }
   });
 
-  // Default: expanded, showing the most recent week, with that week already
-  // selected in the dropdown so it's obvious what's being shown. Leave this
-  // as the default until told to switch back to the collapsed/prompt state.
-  if(RESULTS_ARCHIVE.length){
-    select.value = RESULTS_ARCHIVE[0].dateKey;
-    showResultsContent();
-    renderResultsForDate(RESULTS_ARCHIVE[0].dateKey);
-  } else {
-    select.value = '';
-    showResultsPrompt();
-  }
+  // Collapsed by default — condenses the page. The person picks a week to expand it.
+  select.value = '';
+  showResultsPrompt();
 }
 
 /* ============ MAIN RENDER ============ */
@@ -2643,7 +2656,7 @@ document.getElementById('banterPostBtn').addEventListener('click', postBanterCom
 const WEATHER_DATA = {
   Fri:{icon:'⛅',temp:83,rain:25}, Sat:{icon:'⛅',temp:83,rain:20}, Sun:{icon:'🌧️',temp:81,rain:85},
   Mon:{icon:'⛅',temp:76,rain:25}, Tue:{icon:'☀️',temp:80,rain:0}, Wed:{icon:'☀️',temp:83,rain:10},
-  Thu:{icon:'⛅',temp:80,rain:15}
+  Thu:{icon:'🌧️',temp:82,rain:75}
 };
 function renderWeatherWidget(){
   const dayAbbrevs = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
@@ -2658,7 +2671,7 @@ renderWeatherWidget();
 // Update this each week to that week's actual shotgun start time.
 // Format: "YYYY-MM-DDTHH:MM:SS-04:00" (-04:00 = Eastern Daylight Time, what
 // applies in summer; switch to -05:00 for Eastern Standard Time in winter).
-const SHOTGUN_START_TIME = new Date("2026-08-27T17:30:00-04:00");
+const SHOTGUN_START_TIME = new Date("2026-09-03T17:30:00-04:00");
 function updateShotgunTicker(){
   const el = document.getElementById('shotgunTicker');
   if(!el) return;
