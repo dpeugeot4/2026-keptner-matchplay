@@ -181,6 +181,15 @@
     background:#FFFFFF;
     color:var(--green-dark);border-radius:10px;padding:4px 12px;
     box-shadow:0 4px 16px rgba(0,0,0,0.28);
+    border:2px solid #D8362A;
+    animation:courseConditionsGlow 1.8s ease-in-out infinite;
+  }
+  @keyframes courseConditionsGlow{
+    0%, 100%{ box-shadow:0 0 0 0 rgba(216,54,42,0.8), 0 4px 16px rgba(0,0,0,0.28); transform:scale(1); }
+    50%{ box-shadow:0 0 0 26px rgba(216,54,42,0), 0 4px 16px rgba(0,0,0,0.28); transform:scale(1.06); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .status-alert{ animation:none; }
   }
   .banter-preview-box{
     display:flex;flex-direction:column;gap:10px;
@@ -204,7 +213,7 @@
     .hr-col-center{align-items:flex-start;}
     .hr-col-center .hr-label{width:auto;text-align:left;}
     .hr-label{min-height:0;line-height:1.3;}
-    .status-alert{padding:3px 10px;gap:5px;min-width:0;width:100%;box-sizing:border-box;}
+    .status-alert{padding:3px 10px;gap:5px;min-width:0;width:100%;box-sizing:border-box;height:auto;min-height:28px;}
     .ia-icon{font-size:14px;}
     .ia-value{white-space:normal;line-height:1.2;font-size:9.5px;overflow-wrap:break-word;}
     .weather-strip{padding:2px 4px;min-width:0;width:100%;box-sizing:border-box;}
@@ -754,7 +763,7 @@ Extra-hole winners:
         <div class="hr-label">Course Conditions</div>
         <div class="status-alert">
           <div class="ia-icon">⛳</div>
-          <div class="ia-value">Lift, Clean, Place Fairways &amp; Bunkers</div>
+          <div class="ia-value">🛺 CART PATH ONLY — Lift, Clean, Place Fairways &amp; Bunkers</div>
         </div>
       </div>
     </div>
@@ -893,7 +902,7 @@ Extra-hole winners:
 <script>
 /* ============ CONFIG ============ */
 const ADMIN_PIN = "9512"; // change this before sending the file out
-/*EXPORT_DATE_START*/const EXPORT_DATE = "2026-09-03T19:40:00.000Z";/*EXPORT_DATE_END*/
+/*EXPORT_DATE_START*/const EXPORT_DATE = "2026-09-03T19:55:00.000Z";/*EXPORT_DATE_END*/
 
 /* ============ DATA MODEL ============ */
 const matches = {};
