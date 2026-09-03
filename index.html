@@ -199,13 +199,15 @@
   .ia-value{font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:700;color:var(--green-dark);white-space:normal;overflow-wrap:break-word;}
   @media(max-width:900px){ .ia-value{font-size:11px;} }
   @media(max-width:640px){
-    .header-right{gap:8px;flex-wrap:nowrap;}
-    .hr-col{flex:0 1 auto;min-width:0;}
-    .hr-label{min-height:24px;line-height:1.3;}
-    .status-alert{padding:3px 10px;gap:5px;min-width:0;}
+    .header-right{gap:8px;flex-wrap:nowrap;flex-direction:column;align-items:stretch;width:100%;}
+    .hr-col{flex:0 1 auto;min-width:0;width:100%;}
+    .hr-col-center{align-items:flex-start;}
+    .hr-col-center .hr-label{width:auto;text-align:left;}
+    .hr-label{min-height:0;line-height:1.3;}
+    .status-alert{padding:3px 10px;gap:5px;min-width:0;width:100%;box-sizing:border-box;}
     .ia-icon{font-size:14px;}
     .ia-value{white-space:normal;line-height:1.2;font-size:9.5px;overflow-wrap:break-word;}
-    .weather-strip{padding:2px 4px;min-width:0;}
+    .weather-strip{padding:2px 4px;min-width:0;width:100%;box-sizing:border-box;}
     .ws-day{padding:0 5px;}
     .ws-dow{font-size:8px;}
     .ws-temp{font-size:11px;}
@@ -891,7 +893,7 @@ Extra-hole winners:
 <script>
 /* ============ CONFIG ============ */
 const ADMIN_PIN = "9512"; // change this before sending the file out
-/*EXPORT_DATE_START*/const EXPORT_DATE = "2026-09-03T19:25:00.000Z";/*EXPORT_DATE_END*/
+/*EXPORT_DATE_START*/const EXPORT_DATE = "2026-09-03T19:40:00.000Z";/*EXPORT_DATE_END*/
 
 /* ============ DATA MODEL ============ */
 const matches = {};
