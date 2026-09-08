@@ -386,6 +386,10 @@
   .regions-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:34px;}
   .regions-grid.compact{grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;}
   @media(max-width:900px){ .regions-grid.compact{grid-template-columns:repeat(2,minmax(0,1fr));} }
+  @media(max-width:640px){
+    .regions-grid.compact{grid-template-columns:1fr;gap:14px;}
+    .region.compact .name{overflow:visible;text-overflow:clip;white-space:normal;}
+  }
   .region.compact{padding:16px;}
   .region.compact .region-head{margin-bottom:12px;justify-content:center;}
   .region.compact .region-head h3{font-size:15px;}
@@ -997,7 +1001,7 @@ Extra-hole winners:
 <script>
 /* ============ CONFIG ============ */
 const ADMIN_PIN = "9512"; // change this before sending the file out
-/*EXPORT_DATE_START*/const EXPORT_DATE = "2026-09-08T21:35:00.000Z";/*EXPORT_DATE_END*/
+/*EXPORT_DATE_START*/const EXPORT_DATE = "2026-09-08T21:45:00.000Z";/*EXPORT_DATE_END*/
 
 /* ============ DATA MODEL ============ */
 const matches = {};
