@@ -71,6 +71,8 @@
   }
   .cb-btn:hover{background:rgba(255,255,255,0.26);}
   .cb-btn.gold{background:var(--gold);border-color:var(--gold);color:var(--green-dark);font-weight:600;}
+  .cb-btn.outline{background:transparent;border:1.5px solid var(--green-dark);color:var(--green-dark);}
+  .cb-btn.outline:hover{background:var(--green-dark);color:var(--paper);}
   .cb-btn.danger{border-color:#D98C6B;color:#F3C6B4;}
   .cb-actions{display:flex;gap:10px;align-items:center;}
   .brand-share-btn{background:none;border:none;padding:6px;margin:0;cursor:pointer;display:flex;align-items:center;justify-content:center;flex:none;}
@@ -408,7 +410,13 @@
   .region.compact .seed{flex:none;}
   .region.compact .strokes-badge,.region.compact .check{flex:none;}
   .ff-section{margin:36px 0 0;}
-  .ff-section-head{display:flex;align-items:center;gap:14px;margin-bottom:24px;}
+  .ff-section-head{display:flex;align-items:center;gap:14px;margin-bottom:24px;flex-wrap:wrap;}
+  @media(max-width:640px){
+    .ff-section-head{gap:10px;}
+    .ff-section-head .rule{display:none;}
+    .ff-section-head h2{width:100%;}
+    .ff-section-head #strokeInfoBtn,.ff-section-head #viewFullBracketBtn{font-size:10px;padding:6px 9px;white-space:nowrap;}
+  }
   .ff-section-head .tee{width:26px;height:26px;border-radius:50%;background:var(--green-dark);color:var(--gold-soft);display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;flex:none;}
   .ff-section-head h2{font-family:'Fraunces',serif;font-weight:600;font-size:21px;margin:0;}
   .ff-section-head .rule{flex:1;height:1px;background:repeating-linear-gradient(90deg,var(--line) 0 6px, transparent 6px 11px);}
@@ -546,6 +554,23 @@
   .footnote{margin-top:44px;background:var(--card);border:1px dashed var(--line);border-radius:10px;padding:16px 20px;font-size:13px;color:var(--ink-soft);line-height:1.65;}
   .footnote b{color:var(--ink);}
   .footer-mark{display:flex;align-items:center;gap:8px;justify-content:center;margin-top:50px;color:var(--ink-soft);font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;}
+
+  /* ===== STROKE ALLOCATION INFO MODAL ===== */
+  .stroke-info-overlay{position:fixed;inset:0;background:rgba(20,36,27,0.86);z-index:210;display:none;align-items:center;justify-content:center;padding:24px 16px;}
+  .stroke-info-overlay.open{display:flex;}
+  .stroke-info-box{background:var(--paper);border-radius:16px;width:600px;max-width:100%;max-height:88vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.4);padding:26px 28px 28px;}
+  .stroke-info-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+  .stroke-info-header h3{font-family:'Fraunces',serif;font-weight:600;font-size:21px;margin:0;color:var(--green-dark);}
+  .stroke-info-close{background:none;border:none;font-size:26px;line-height:1;color:var(--ink-soft);cursor:pointer;padding:0 4px;}
+  .stroke-info-close:hover{color:var(--ink);}
+  .stroke-info-body p{font-family:'Inter',sans-serif;font-size:14.5px;line-height:1.6;color:var(--ink);margin:0 0 14px;}
+  .stroke-info-body p:last-child{margin-bottom:0;}
+  .stroke-info-body strong{color:var(--green-dark);}
+  .stroke-info-list{margin:0 0 14px;padding-left:20px;}
+  .stroke-info-list li{font-family:'Inter',sans-serif;font-size:14.5px;line-height:1.6;color:var(--ink);margin-bottom:12px;}
+  .stroke-info-list li:last-child{margin-bottom:0;}
+  .stroke-info-note{font-size:13px !important;color:var(--ink-soft) !important;font-style:italic;border-top:1px solid var(--card-border);padding-top:14px;}
+  @media(max-width:640px){ .stroke-info-box{padding:20px;} .stroke-info-header h3{font-size:18px;} }
 
   /* ===== FULL BRACKET OVERLAY ===== */
   .full-bracket-overlay{position:fixed;inset:0;background:rgba(20,36,27,0.86);z-index:200;display:none;align-items:center;justify-content:center;padding:24px 16px;}
@@ -777,6 +802,24 @@
   </div>
 </div>
 
+<div class="stroke-info-overlay" id="strokeInfoOverlay">
+  <div class="stroke-info-box">
+    <div class="stroke-info-header">
+      <h3>⛳ Why 5 Strokes?</h3>
+      <button type="button" class="stroke-info-close" id="strokeInfoClose" aria-label="Close">&times;</button>
+    </div>
+    <div class="stroke-info-body">
+      <p>At first glance, two players may appear to be only 8&ndash;10 Handicap Index points apart, but under the USGA/WHS handicap system, each player's Handicap Index is converted to a Course Handicap for the specific tees being played. At StoneWater, the White tees are rated 69.0 / 130, so the calculation is: <em>Handicap Index &times; (130 &divide; 113) + (69 &minus; 71)</em>.</p>
+      <ul class="stroke-info-list">
+        <li>As a general example, a player around a 12 Handicap Index converts to roughly a 12 Course Handicap, while a player around a 22 Handicap Index converts to roughly a 23 Course Handicap. What initially looks like about a 10-point Index difference can therefore become about an 11-stroke Course Handicap difference.</li>
+        <li>Because StoneWater's slope of 130 is higher than the USGA baseline of 113, the higher-handicap player receives a larger upward adjustment in the conversion than the lower-handicap player.</li>
+        <li>Those strokes are then assigned according to StoneWater's 18-hole stroke-index rankings, not simply divided evenly between the front and back nine.</li>
+        <li>On the back nine, the first 10 or 11 strokes both fall on the same five holes: 12, 13, 15, 16 and 18. The 11th stroke falls on a front-nine hole, so whether the full-round difference is 10 strokes or 11 strokes, the higher-handicap player still gets 5 dots on the back nine.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
 <div class="full-bracket-overlay" id="fullBracketOverlay">
 
   <div class="fb-image-view" id="fbImageView">
@@ -872,63 +915,8 @@ Extra-hole winners:
 
   <div id="topLeadSection"></div>
 
-  <div class="section-head"><div class="tee">MP</div><h2>Match Play</h2><div class="rule"></div><button class="cb-btn gold" id="viewFullBracketBtn" style="flex:none;">Full Bracket</button></div>
-  <div class="regions-grid compact" id="regionsGrid"><div class="region">
-    <div class="region-head"><h3>Bracket 1</h3></div>
-    <div class="bracket-scale-outer" style="height: 231.726px;">
-      <div class="bracket-scale-inner" style="transform: scale(0.740338);">
-        <div class="round-labels" style="width:828px">
-          <span style="width:230px;margin-right:46px;">Round 1</span><span style="width:230px;margin-right:46px;">Round 2</span><span style="width:230px;margin-right:46px;">Bracket Winner</span>
-        </div>
-        <div class="bracket-canvas" style="height:290px;">
-          <svg width="828" height="290" style="position:absolute;top:0;left:0;">
-            <g stroke="#C9BFA9" stroke-width="1.4" fill="none"><path d="M 230 26 H 253 M 230 104 H 253 M 253 26 V 104 M 253 65 H 276"></path><path d="M 230 182 H 253 M 230 260 H 253 M 253 182 V 260 M 253 221 H 276"></path><path d="M 506 65 H 529 M 506 221 H 529 M 529 65 V 221 M 529 143 H 552"></path></g>
-          </svg>
-        <div class="match-box" style="left: 0px; top: 0px; width: 230px;"><div class="slot clickable selected"><span class="seed">1</span><span class="name">Paul McHugh <span class="hcp">(18.4)</span></span><span class="check">✓</span></div><div class="slot clickable dimmed"><span class="seed">32</span><span class="name">Dan Coffey <span class="hcp">(30.6)</span></span><button type="button" class="strokes-badge" data-holes="1, 2, 3, 4, 7, 8, 9" data-count="7" aria-label="Strokes given this round">●7</button></div></div><div class="match-box" style="left: 0px; top: 78px; width: 230px;"><div class="slot clickable dimmed"><span class="seed">16</span><span class="name">Ben Greenberg <span class="hcp">(13.6)</span></span></div><div class="slot clickable selected"><span class="seed">17</span><span class="name">Arnie Hallai <span class="hcp">(22.7)</span></span><button type="button" class="strokes-badge" data-holes="1, 2, 3, 4, 9" data-count="5" aria-label="Strokes given this round">●5</button><span class="check">✓</span></div></div><div class="match-box" style="left: 0px; top: 156px; width: 230px;"><div class="slot clickable selected"><span class="seed">8</span><span class="name">Bruce Rodgers <span class="hcp">(17.8)</span></span><span class="check">✓</span></div><div class="slot clickable dimmed"><span class="seed">25</span><span class="name">Eric Mohre <span class="hcp">(19.7)</span></span><button type="button" class="strokes-badge" data-holes="1, 9" data-count="2" aria-label="Strokes given this round">●2</button></div></div><div class="match-box" style="left: 0px; top: 234px; width: 230px;"><div class="slot clickable dimmed"><span class="seed">9</span><span class="name">Justin Keptner <span class="hcp">(23.2)</span></span><button type="button" class="strokes-badge" data-holes="1, 2, 4, 9" data-count="4" aria-label="Strokes given this round">●4</button></div><div class="slot clickable selected"><span class="seed">24</span><span class="name">Anton Dushaj <span class="hcp">(17.2)</span></span><span class="check">✓</span></div></div><div class="match-box" style="left: 276px; top: 39px; width: 230px;"><div class="slot clickable"><span class="seed">1</span><span class="name">Paul McHugh <span class="hcp">(18.4)</span></span></div><div class="slot clickable"><span class="seed">17</span><span class="name">Arnie Hallai <span class="hcp">(22.7)</span></span><button type="button" class="strokes-badge" data-holes="1, 2, 3, 4, 9" data-count="5" aria-label="Strokes given this round">●5</button></div></div><div class="match-box" style="left: 276px; top: 195px; width: 230px;"><div class="slot clickable"><span class="seed">8</span><span class="name">Bruce Rodgers <span class="hcp">(17.8)</span></span></div><div class="slot clickable"><span class="seed">24</span><span class="name">Anton Dushaj <span class="hcp">(17.2)</span></span></div></div><div class="match-box champion-box" style="left: 552px; top: 117px; width: 230px;"><div class="slot locked"><span class="seed"></span><span class="name tbd">TBD</span></div><div class="slot locked"><span class="seed"></span><span class="name tbd">TBD</span></div></div></div>
-      </div>
-    </div></div><div class="region">
-    <div class="region-head"><h3>Bracket 2</h3></div>
-    <div class="bracket-scale-outer" style="height: 239.87px;">
-      <div class="bracket-scale-inner" style="transform: scale(0.740338);">
-        <div class="round-labels" style="width:828px">
-          <span style="width:230px;margin-right:46px;">Round 1</span><span style="width:230px;margin-right:46px;">Round 2</span><span style="width:230px;margin-right:46px;">Bracket Winner</span>
-        </div>
-        <div class="bracket-canvas" style="height:290px;">
-          <svg width="828" height="290" style="position:absolute;top:0;left:0;">
-            <g stroke="#C9BFA9" stroke-width="1.4" fill="none"><path d="M 230 26 H 253 M 230 104 H 253 M 253 26 V 104 M 253 65 H 276"></path><path d="M 230 182 H 253 M 230 260 H 253 M 253 182 V 260 M 253 221 H 276"></path><path d="M 506 65 H 529 M 506 221 H 529 M 529 65 V 221 M 529 143 H 552"></path></g>
-          </svg>
-        <div class="match-box" style="left: 0px; top: 0px; width: 230px;"><div class="slot clickable selected"><span class="seed">4</span><span class="name">Greg Buehner <span class="hcp">(13.4)</span></span><span class="check">✓</span></div><div class="slot clickable dimmed"><span class="seed">29</span><span class="name">John Gaspar <span class="hcp">(19.6)</span></span><button type="button" class="strokes-badge" data-holes="1, 2, 4, 9" data-count="4" aria-label="Strokes given this round">●4</button></div></div><div class="match-box" style="left: 0px; top: 78px; width: 230px;"><div class="slot clickable dimmed"><span class="seed">13</span><span class="name">Frank Dilalla <span class="hcp">(21.3)</span></span><button type="button" class="strokes-badge" data-holes="1, 2, 3, 4, 5, 7, 8, 9" data-count="8" aria-label="Strokes given this round">●8</button></div><div class="slot clickable selected"><span class="seed">20</span><span class="name">Bob Gilbert <span class="hcp">(8.3)</span></span><span class="check">✓</span></div></div><div class="match-box" style="left: 0px; top: 156px; width: 230px;"><div class="slot clickable selected"><span class="seed">5</span><span class="name">Jeff Keptner <span class="hcp">(24.9)</span></span><button type="button" class="strokes-badge" data-holes="1, 2, 3, 4, 7, 8, 9" data-count="7" aria-label="Strokes given this round">●7</button><span class="check">✓</span></div><div class="slot clickable dimmed"><span class="seed">28</span><span class="name">Steven Andrzejczyk <span class="hcp">(13.5)</span></span></div></div><div class="match-box" style="left: 0px; top: 234px; width: 230px;"><div class="slot clickable dimmed"><span class="seed">12</span><span class="name">Larry Guarino <span class="hcp">(20.2)</span></span></div><div class="slot clickable selected"><span class="seed">21</span><span class="name">Andrew Wollschleger <span class="hcp">(21.4)</span></span><button type="button" class="strokes-badge" data-holes="1" data-count="1" aria-label="Strokes given this round">●1</button><span class="check">✓</span></div></div><div class="match-box" style="left: 276px; top: 39px; width: 230px;"><div class="slot clickable"><span class="seed">4</span><span class="name">Greg Buehner <span class="hcp">(13.4)</span></span></div><div class="slot clickable"><span class="seed">20</span><span class="name">Bob Gilbert <span class="hcp">(8.3)</span></span></div></div><div class="match-box" style="left: 276px; top: 195px; width: 230px;"><div class="slot clickable"><span class="seed">5</span><span class="name">Jeff Keptner <span class="hcp">(24.9)</span></span><button type="button" class="strokes-badge" data-holes="1, 2, 3, 4, 7, 8, 9" data-count="7" aria-label="Strokes given this round">●7</button></div><div class="slot clickable"><span class="seed">21</span><span class="name">Andrew Wollschleger <span class="hcp">(21.4)</span></span><button type="button" class="strokes-badge" data-holes="1" data-count="1" aria-label="Strokes given this round">●1</button></div></div><div class="match-box champion-box" style="left: 552px; top: 117px; width: 230px;"><div class="slot locked"><span class="seed"></span><span class="name tbd">TBD</span></div><div class="slot locked"><span class="seed"></span><span class="name tbd">TBD</span></div></div></div>
-      </div>
-    </div></div><div class="region">
-    <div class="region-head"><h3>Bracket 3</h3></div>
-    <div class="bracket-scale-outer" style="height: 230.245px;">
-      <div class="bracket-scale-inner" style="transform: scale(0.740338);">
-        <div class="round-labels" style="width:828px">
-          <span style="width:230px;margin-right:46px;">Round 1</span><span style="width:230px;margin-right:46px;">Round 2</span><span style="width:230px;margin-right:46px;">Bracket Winner</span>
-        </div>
-        <div class="bracket-canvas" style="height:290px;">
-          <svg width="828" height="290" style="position:absolute;top:0;left:0;">
-            <g stroke="#C9BFA9" stroke-width="1.4" fill="none"><path d="M 230 26 H 253 M 230 104 H 253 M 253 26 V 104 M 253 65 H 276"></path><path d="M 230 182 H 253 M 230 260 H 253 M 253 182 V 260 M 253 221 H 276"></path><path d="M 506 65 H 529 M 506 221 H 529 M 529 65 V 221 M 529 143 H 552"></path></g>
-          </svg>
-        <div class="match-box" style="left: 0px; top: 0px; width: 230px;"><div class="slot clickable selected"><span class="seed">2</span><span class="name">Frank Polisena <span class="hcp">(16.1)</span></span><button type="button" class="strokes-badge" data-holes="1, 9" data-count="2" aria-label="Strokes given this round">●2</button><span class="check">✓</span></div><div class="slot clickable dimmed"><span class="seed">34</span><span class="name">Michael Paglia <span class="hcp">(14.1)</span></span></div></div><div class="match-box" style="left: 0px; top: 78px; width: 230px;"><div class="slot clickable dimmed"><span class="seed">15</span><span class="name">Ben Parrotta <span class="hcp">(11.7)</span></span></div><div class="slot clickable selected"><span class="seed">18</span><span class="name">Dustin Peugeot <span class="hcp">(11.5)</span></span><span class="check">✓</span></div></div><div class="match-box" style="left: 0px; top: 156px; width: 230px;"><div class="slot clickable selected"><span class="seed">7</span><span class="name">Matt Gdovin <span class="hcp">(11.6)</span></span><span class="check">✓</span></div><div class="slot clickable dimmed"><span class="seed">26</span><span class="name">John Spiccia <span class="hcp">(18.4)</span></span></div></div><div class="match-box" style="left: 0px; top: 234px; width: 230px;"><div class="slot clickable selected"><span class="seed">10</span><span class="name">Brian Haberman <span class="hcp">(23.1)</span></span><span class="check">✓</span></div><div class="slot clickable dimmed"><span class="seed">23</span><span class="name">Jack Wu <span class="hcp">(25.7)</span></span></div></div><div class="match-box" style="left: 276px; top: 39px; width: 230px;"><div class="slot clickable"><span class="seed">2</span><span class="name">Frank Polisena <span class="hcp">(16.1)</span></span><button type="button" class="strokes-badge" data-holes="1, 9" data-count="2" aria-label="Strokes given this round">●2</button></div><div class="slot clickable"><span class="seed">18</span><span class="name">Dustin Peugeot <span class="hcp">(11.5)</span></span></div></div><div class="match-box" style="left: 276px; top: 195px; width: 230px;"><div class="slot clickable"><span class="seed">7</span><span class="name">Matt Gdovin <span class="hcp">(11.6)</span></span></div><div class="slot clickable"><span class="seed">10</span><span class="name">Brian Haberman <span class="hcp">(23.1)</span></span></div></div><div class="match-box champion-box" style="left: 552px; top: 117px; width: 230px;"><div class="slot locked"><span class="seed"></span><span class="name tbd">TBD</span></div><div class="slot locked"><span class="seed"></span><span class="name tbd">TBD</span></div></div></div>
-      </div>
-    </div></div><div class="region">
-    <div class="region-head"><h3>Bracket 4</h3></div>
-    <div class="bracket-scale-outer" style="height: 230.986px;">
-      <div class="bracket-scale-inner" style="transform: scale(0.740338);">
-        <div class="round-labels" style="width:828px">
-          <span style="width:230px;margin-right:46px;">Round 1</span><span style="width:230px;margin-right:46px;">Round 2</span><span style="width:230px;margin-right:46px;">Bracket Winner</span>
-        </div>
-        <div class="bracket-canvas" style="height:290px;">
-          <svg width="828" height="290" style="position:absolute;top:0;left:0;">
-            <g stroke="#C9BFA9" stroke-width="1.4" fill="none"><path d="M 230 26 H 253 M 230 104 H 253 M 253 26 V 104 M 253 65 H 276"></path><path d="M 230 182 H 253 M 230 260 H 253 M 253 182 V 260 M 253 221 H 276"></path><path d="M 506 65 H 529 M 506 221 H 529 M 529 65 V 221 M 529 143 H 552"></path></g>
-          </svg>
-        <div class="match-box" style="left: 0px; top: 0px; width: 230px;"><div class="slot clickable selected"><span class="seed">3</span><span class="name">Greg Costabile <span class="hcp">(17.9)</span></span><span class="check">✓</span></div><div class="slot clickable dimmed"><span class="seed">30</span><span class="name">Vincent Culotta <span class="hcp">(21.4)</span></span><button type="button" class="strokes-badge" data-holes="1, 9" data-count="2" aria-label="Strokes given this round">●2</button></div></div><div class="match-box" style="left: 0px; top: 78px; width: 230px;"><div class="slot clickable selected"><span class="seed">14</span><span class="name">Bobby Lewis <span class="hcp">(19.7)</span></span><button type="button" class="strokes-badge" data-holes="1, 9" data-count="2" aria-label="Strokes given this round">●2</button><span class="check">✓</span></div><div class="slot clickable dimmed"><span class="seed">19</span><span class="name">Don Haines <span class="hcp">(16.5)</span></span></div></div><div class="match-box" style="left: 0px; top: 156px; width: 230px;"><div class="slot clickable selected"><span class="seed">6</span><span class="name">Michael Hallai <span class="hcp">(22.2)</span></span><button type="button" class="strokes-badge" data-holes="1" data-count="1" aria-label="Strokes given this round">●1</button><span class="check">✓</span></div><div class="slot clickable dimmed"><span class="seed">27</span><span class="name">Matt Gaspar <span class="hcp">(22.0)</span></span></div></div><div class="match-box" style="left: 0px; top: 234px; width: 230px;"><div class="slot clickable"><span class="seed">11</span><span class="name">Michael Leuchtag <span class="hcp">(13.4)</span></span><button type="button" class="strokes-badge" data-holes="1, 2, 3, 4, 9" data-count="5" aria-label="Strokes given this round">●5</button></div><div class="slot clickable"><span class="seed">22</span><span class="name">Frank Guarino <span class="hcp">(5.4)</span></span></div></div><div class="match-box" style="left: 276px; top: 39px; width: 230px;"><div class="slot clickable"><span class="seed">3</span><span class="name">Greg Costabile <span class="hcp">(17.9)</span></span></div><div class="slot clickable"><span class="seed">14</span><span class="name">Bobby Lewis <span class="hcp">(19.7)</span></span><button type="button" class="strokes-badge" data-holes="1, 9" data-count="2" aria-label="Strokes given this round">●2</button></div></div><div class="match-box" style="left: 276px; top: 195px; width: 230px;"><div class="slot"><span class="seed">6</span><span class="name">Michael Hallai <span class="hcp">(22.2)</span></span><button type="button" class="strokes-badge" data-holes="1" data-count="1" aria-label="Strokes given this round">●1</button></div><div class="slot locked"><span class="seed"></span><span class="name tbd">TBD</span></div></div><div class="match-box champion-box" style="left: 552px; top: 117px; width: 230px;"><div class="slot locked"><span class="seed"></span><span class="name tbd">TBD</span></div><div class="slot locked"><span class="seed"></span><span class="name tbd">TBD</span></div></div></div>
-      </div>
-    </div></div></div>
-
   <div class="ff-section">
-    <div class="ff-section-head"><div class="tee">FF</div><h2>Final Four &amp; Championship</h2><div class="rule"></div></div>
+    <div class="ff-section-head"><div class="tee">FF</div><h2>Final Four &amp; Championship</h2><div class="rule"></div><button class="cb-btn outline" id="strokeInfoBtn" style="flex:none;margin-right:8px;">ⓘ Stroke Allocation</button><button class="cb-btn gold" id="viewFullBracketBtn" style="flex:none;">Full Bracket</button></div>
     <div class="ff-grid">
       <div><div class="ff-label">Final Four · Sept 10</div><div class="match-box" id="mainFF1"></div></div>
       <div><div class="ff-label">Final Four · Sept 10</div><div class="match-box" id="mainFF2"></div></div>
@@ -1015,7 +1003,7 @@ Extra-hole winners:
 <script>
 /* ============ CONFIG ============ */
 const ADMIN_PIN = "9512"; // change this before sending the file out
-/*EXPORT_DATE_START*/const EXPORT_DATE = "2026-09-09T22:50:00.000Z";/*EXPORT_DATE_END*/
+/*EXPORT_DATE_START*/const EXPORT_DATE = "2026-09-10T14:45:00.000Z";/*EXPORT_DATE_END*/
 
 /* ============ DATA MODEL ============ */
 const matches = {};
@@ -1127,6 +1115,11 @@ const STROKES_DATA = {
   'reg2-rf': { 'Andrew Wollschleger': [1,2,4,9] },
   'reg3-rf': { 'Dustin Peugeot': [1] },
   'reg4-rf': { 'Michael Hallai': [1,9] },
+
+  // Final Four (9/10) — played on the BACK nine. Course handicap strokes
+  // computed from the White tee card (Slope 130, Rating 69.0, Par 71).
+  'sf1': { 'Arnie Hallai': [12,13,15,16,18] },
+  'sf2': { 'Bobby Lewis': [12,13,15,16,18] },
 };
 
 // Matches where we know a player will get strokes but not which holes yet —
@@ -1562,8 +1555,10 @@ function initResultsDatePicker(){
 /* ============ MAIN RENDER ============ */
 function renderAll(){
   const grid = document.getElementById('regionsGrid');
-  grid.innerHTML = '';
-  REGIONS.forEach(r => grid.appendChild(buildRegionCompactDOM(r)));
+  if(grid){
+    grid.innerHTML = '';
+    REGIONS.forEach(r => grid.appendChild(buildRegionCompactDOM(r)));
+  }
 
   const ff1Box = document.getElementById('mainFF1'); if(ff1Box) fillMatchBox(ff1Box, 'sf1');
   const ff2Box = document.getElementById('mainFF2'); if(ff2Box) fillMatchBox(ff2Box, 'sf2');
@@ -2071,7 +2066,17 @@ document.getElementById('fbDownloadImgBtn').addEventListener('click', async ()=>
   URL.revokeObjectURL(url);
 });
 
-document.getElementById('viewFullBracketBtn').addEventListener('click', openFullBracketOverlay);
+const viewFullBracketBtnEl = document.getElementById('viewFullBracketBtn');
+if(viewFullBracketBtnEl) viewFullBracketBtnEl.addEventListener('click', openFullBracketOverlay);
+
+const strokeInfoBtnEl = document.getElementById('strokeInfoBtn');
+const strokeInfoOverlayEl = document.getElementById('strokeInfoOverlay');
+const strokeInfoCloseEl = document.getElementById('strokeInfoClose');
+if(strokeInfoBtnEl && strokeInfoOverlayEl){
+  strokeInfoBtnEl.addEventListener('click', () => strokeInfoOverlayEl.classList.add('open'));
+  if(strokeInfoCloseEl) strokeInfoCloseEl.addEventListener('click', () => strokeInfoOverlayEl.classList.remove('open'));
+  strokeInfoOverlayEl.addEventListener('click', (e) => { if(e.target === strokeInfoOverlayEl) strokeInfoOverlayEl.classList.remove('open'); });
+}
 
 document.getElementById('fbCloseBtn').addEventListener('click', ()=>{
   document.getElementById('fullBracketOverlay').classList.remove('open');
