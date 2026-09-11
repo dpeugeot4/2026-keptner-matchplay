@@ -348,6 +348,8 @@
     50%{ border-color:#A855F7; box-shadow:0 0 10px 3px rgba(168,85,247,0.9), 0 0 26px 8px rgba(168,85,247,0.6), inset 0 0 14px rgba(168,85,247,0.35); }
   }
   @media (prefers-reduced-motion: reduce){ .neon-highlight{ animation:none; border-color:#FF2ED1; box-shadow:0 0 10px 3px rgba(255,46,209,0.6); } }
+  .story-highlight-green{border-radius:14px;padding:22px 24px 24px;border:2px solid var(--green-dark);background:var(--card);box-shadow:0 4px 20px rgba(30,58,43,0.12);}
+  @media (prefers-reduced-motion: reduce){ .story-highlight-green{ border-color:var(--green-dark); } }
   .story-headline-normal{font-family:'Inter',sans-serif;font-weight:400;font-size:17px;line-height:1.6;}
   .story-blurb{font-family:'Inter',sans-serif;font-size:15.5px;line-height:1.55;color:var(--ink);margin:0 0 4px;}
   .story-blurb + .story-blurb{margin-top:14px;}
@@ -1001,7 +1003,7 @@ Extra-hole winners:
 <script>
 /* ============ CONFIG ============ */
 const ADMIN_PIN = "9512"; // change this before sending the file out
-/*EXPORT_DATE_START*/const EXPORT_DATE = "2026-09-11T15:20:00.000Z";/*EXPORT_DATE_END*/
+/*EXPORT_DATE_START*/const EXPORT_DATE = "2026-09-11T12:01:57.000Z";/*EXPORT_DATE_END*/
 
 /* ============ DATA MODEL ============ */
 const matches = {};
@@ -1488,10 +1490,15 @@ function renderUpcomingLeadContent(round){
   return `
     <div class="section-head"><div class="tee">FOT</div><h2>Fresh Off the Tee:</h2><div class="fresh-tee-dot"></div><div class="rule"></div></div>
     <div class="fresh-tee-subtitle">News, Updates and Information</div>
-    <div class="fresh-tee-card">
-      <div class="neon-highlight" style="margin-top:0;"><h3 class="story-headline stacked" style="margin-top:0;">💰 Big Bucks Thursday <span class="story-headline-normal">— Doubled pot for the field: <strong>$240 Skins</strong>, <strong>$80 Pins</strong>, and <strong>$100 Low Net Bonus!</strong> (Every stroke counts- so putt 'em out -including match play guys please)</span></h3></div>
+    <div class="fresh-tee-card story-highlight-green">
+      <h3 class="story-headline stacked" style="margin-top:0;">SUDDEN DEATH! - <span class="story-headline-normal">StoneWater GC, Highland Heights, OH</span></h3>
+      <p class="story-headline-normal" style="margin:0 0 14px;">Matt Gdovin and Bobby Lewis traded blows throughout StoneWater's back nine in a semifinal battle more reminiscent of Balboa vs. Drago than match play — both a little bloodied from the fight, but neither quite ready to fall.</p>
+      <p class="story-headline-normal" style="margin:0 0 14px;">After an ugly 18th hole for both, played in the dark in front of an anxious crowd, the match remained deadlocked. With no daylight left to continue, the battle was suspended.</p>
+      <p class="story-headline-normal" style="margin:0 0 14px;">Gdovin and Lewis will return this weekend, time TBD, with sudden death beginning on No. 10 and a spot in the Keptner League Championship Match on the line.</p>
+      <p class="story-headline-normal" style="margin:0 0 14px;">Waiting in the Final is Greg Buehner, no stranger to the championship stage and chasing his fourth title. Lewis and Gdovin are each fighting for their first shot at Keptner League glory.</p>
+      <p class="story-headline-normal" style="margin:0;">One hole at a time. One survivor. One spot in the Final.</p>
     </div>
-    <div class="section-head" style="margin-top:36px;"><div class="tee">💰</div><h2>Last Night's Winners — ${round.dateLabel}</h2><div class="rule"></div></div>
+    <div class="section-head" style="margin-top:36px;"><div class="tee">💰</div><h2>💰 Winners- Thursday, Sept. 10th</h2><div class="rule"></div></div>
     <div class="recap-label">Match Play</div>
     <div class="recap-card" id="fotRecapMatchPlay"></div>
     <div class="recap-label">Skins</div>
