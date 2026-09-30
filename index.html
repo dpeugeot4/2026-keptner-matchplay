@@ -379,16 +379,16 @@ const ADMIN_PIN = "9512";
 const CUP_DOC = "patriotCup2026"; // stored in the same bracketState collection the match play page uses
 let isAdmin = false, pinRevealed = false;
 const PAIRS_A = [
-  ["Dustin Peugeot + Matt Gdovin","Greg Buehner + Nicholas Lorenzo"],
-  ["Bob Gilbert + Matt Gaspar","Greg Costabile + Michael Leuchtag"],
+  ["Dustin Peugeot + Matt Gdovin","Greg Buehner + Michael Leuchtag"],
+  ["Bob Gilbert + Matt Gaspar","Greg Costabile + Nicholas Lorenzo"],
   ["Ben Parrotta + Anton Dushaj","Paul McHugh + John Spiccia"],
   ["Arnie Hallai + Frank Dilalla","Chuck Brunello + Nicholas Spiccia"]
 ];
 const PAIRS_B = [
   ["Dustin Peugeot + Matt Gdovin","John Spiccia + Paul McHugh"],
-  ["Bob Gilbert + Matt Gaspar","Greg Buehner + Michael Leuchtag"],
+  ["Bob Gilbert + Matt Gaspar","Greg Buehner + Nicholas Lorenzo"],
   ["Ben Parrotta + Anton Dushaj","Chuck Brunello + Nicholas Spiccia"],
-  ["Frank Dilalla + Arnie Hallai","Greg Costabile + Nicholas Lorenzo"]
+  ["Frank Dilalla + Arnie Hallai","Greg Costabile + Michael Leuchtag"]
 ];
 const ROUNDS = [
   {id:"r1", name:"Rd 1 Scramble", matches:PAIRS_A},
@@ -399,11 +399,11 @@ const ROUNDS = [
     ["Dustin Peugeot","John Spiccia"],
     ["Matt Gdovin","Paul McHugh"],
     ["Bob Gilbert","Greg Buehner"],
-    ["Matt Gaspar","Michael Leuchtag"],
+    ["Matt Gaspar","Nicholas Lorenzo"],
     ["Ben Parrotta","Chuck Brunello"],
     ["Anton Dushaj","Nicholas Spiccia"],
     ["Frank Dilalla","Greg Costabile"],
-    ["Arnie Hallai","Nicholas Lorenzo"]
+    ["Arnie Hallai","Michael Leuchtag"]
   ]}
 ];
 const TOTAL = ROUNDS.reduce((s,r)=>s+r.matches.length,0);
