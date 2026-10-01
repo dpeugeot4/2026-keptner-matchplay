@@ -30,20 +30,6 @@
   padding-top:env(safe-area-inset-top,0px);
   padding-bottom:env(safe-area-inset-bottom,0px);
 }
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --bg:#11141a; --surface:#1b1f27; --ink:#eef0f4; --muted:#9aa1ad; --line:#2b303a;
-    --head:#0e1a33; --gold-soft:#3a3218;
-    --navy:#3b6cf0; --navy-soft:#1c2b52; --red:#e0344f; --red-soft:#4a1c25;
-    --slot:#262a33; --slot-ink:#6b7280;
-  }
-}
-:root[data-theme="dark"]{
-  --bg:#11141a; --surface:#1b1f27; --ink:#eef0f4; --muted:#9aa1ad; --line:#2b303a;
-  --head:#0e1a33; --gold-soft:#3a3218;
-  --navy:#3b6cf0; --navy-soft:#1c2b52; --red:#e0344f; --red-soft:#4a1c25;
-  --slot:#262a33; --slot-ink:#6b7280;
-}
 *,*::before,*::after{box-sizing:inherit}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:16px;line-height:1.35}
@@ -861,11 +847,11 @@ try {
 
 const ROSTER_NAMES = [
   "Andrew Wollschleger","Angelo Fappiano","Anton Dushaj","Arnie Hallai","Ben Greenberg",
-  "Ben Parrotta","Bob Gilbert","Brian Haberman","Bruce Rodgers","Dan Coffey","Don Haines",
+  "Ben Parrotta","Bob Gilbert","Brian Haberman","Bruce Rodgers","Chuck Brunello","Dan Coffey","Don Haines",
   "Dustin Peugeot","Eric Mohre","Frank Dilalla","Frank Guarino","Frank Polisena","Greg Buehner",
   "Greg Costabile","Jack Wu","Jeff Keptner","John Gaspar","John Spiccia","Justin Keptner",
   "Larry Guarino","Matt Gaspar","Matt Gdovin","Michael Hallai","Michael Leuchtag",
-  "Michael Paglia","Mitch Cambareri","Paul McHugh","Bobby Lewis","Steven Andrzejczyk",
+  "Michael Paglia","Mitch Cambareri","Nicholas Lorenzo","Nicholas Spiccia","Paul McHugh","Bobby Lewis","Steven Andrzejczyk",
   "Vincent Culotta"
 ].sort();
 
