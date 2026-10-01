@@ -212,6 +212,19 @@ body:not(.is-admin) .tools{display:none}
 .board .team-pts{box-shadow:0 2px 8px rgba(0,0,0,.25)}
 /* Round cards */
 main{max-width:980px;margin:0 auto;padding:6px 12px 30px}
+.rules-section{max-width:980px;margin:14px auto 0;padding:0 12px}
+.rules-label{font-family:"Source Sans 3",system-ui,sans-serif;font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--red);margin-bottom:8px;text-align:center;animation:rulesGlow 1.6s ease-in-out infinite}
+@keyframes rulesGlow{
+  0%,100%{text-shadow:0 0 4px rgba(200,16,46,.3)}
+  50%{text-shadow:0 0 10px rgba(200,16,46,.85),0 0 18px rgba(200,16,46,.5)}
+}
+@media (prefers-reduced-motion: reduce){ .rules-label{animation:none;text-shadow:0 0 6px rgba(200,16,46,.5)} }
+.rules-pill{display:block;background:var(--surface);border-radius:10px;padding:8px 16px;box-shadow:0 4px 16px rgba(0,0,0,.12);font-family:"Source Sans 3",system-ui,sans-serif;font-size:13.5px;font-weight:700;color:var(--ink);text-align:center;line-height:1.6}
+.rules-pill .dot{font-size:1.6em;line-height:0;vertical-align:middle;margin:0 2px;color:var(--muted)}
+.rules-pill .tiebreaker{display:block;margin-top:6px;font-weight:700}
+@media(max-width:640px){
+  .rules-pill{font-size:12.5px;padding:7px 12px}
+}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;margin-top:18px;overflow:hidden;box-shadow:0 1px 3px rgba(20,33,61,.06)}
 .card-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:11px 16px;border-bottom:1px solid var(--line)}
 .card-head h2{margin:0;font-family:"Barlow Condensed","Arial Narrow",sans-serif;font-size:23px;font-weight:700;letter-spacing:.01em}
@@ -462,6 +475,11 @@ main{max-width:980px;margin:0 auto;padding:6px 12px 30px}
   </div>
 </header>
 
+<div class="rules-section">
+  <div class="rules-label">Rules of Play</div>
+  <div class="rules-pill">Red stakes everywhere <span class="dot">&middot;</span> Rake &amp; place in sand <span class="dot">&middot;</span> Lift, clean &amp; place in fairways, standing water &amp; bunkers &mdash; no closer to the hole, can't improve the lie <span class="dot">&middot;</span> Play if course is open &mdash; arrive on time; SW will allow delayed starts if possible TBD<span class="tiebreaker">TIEBREAKER: Top point-winning pair from each team will play sudden-death alternate shot, starting on 10, 11, 18, 10, etc.</span></div>
+</div>
+
 <main id="rounds"></main>
 
 <div class="sc-overlay" id="scOverlay" aria-hidden="true">
@@ -686,6 +704,7 @@ async function save(){
 
 const fmt = n => { if(n===0.5) return ".5"; return Number.isInteger(n) ? String(n) : n.toFixed(1); };
 const ptsFor = r => r==="N"?[1,0]:r==="W"?[0,1]:r==="H"?[.5,.5]:[0,0];
+const displayPair = s => s.replace(/ \+ /g, " & ");
 
 function build(){
   const WHEN={r1:"Friday 1pm", r3:"Sunday 3pm"};
@@ -697,13 +716,13 @@ function build(){
       ${r.matches.map((m,i)=>{
         const id=`${r.id}-${i}`;
         return `<div class="row" id="row-${id}">
-          <button class="side navy" type="button" data-id="${id}" data-pick="N" aria-label="Navy wins: ${m[0]}">${m[0]}</button>
+          <button class="side navy" type="button" data-id="${id}" data-pick="N" aria-label="Navy wins: ${m[0]}">${displayPair(m[0])}</button>
           <div class="center">
             <button class="slot sn" type="button" data-id="${id}" data-pick="N" aria-label="Navy point"></button>
             <button class="tie" type="button" data-id="${id}" data-pick="H" aria-pressed="false">Tie</button>
             <button class="slot sw" type="button" data-id="${id}" data-pick="W" aria-label="White point"></button>
           </div>
-          <button class="side white" type="button" data-id="${id}" data-pick="W" aria-label="White wins: ${m[1]}">${m[1]}</button>
+          <button class="side white" type="button" data-id="${id}" data-pick="W" aria-label="White wins: ${m[1]}">${displayPair(m[1])}</button>
         </div>`;}).join("")}
     </section>`).join("");
 
