@@ -320,6 +320,7 @@ main{max-width:980px;margin:0 auto;padding:6px 12px 30px}
 .sc-table .info td{color:var(--muted);font-size:12px}
 .sc-table .info td:first-child{color:var(--muted);font-weight:600}
 .sc-table .tot{background:var(--bg);font-weight:700}
+.sc-table .hcp{font-size:.82em;font-weight:600;color:var(--muted)}
 .sc-table .team-n td:first-child{color:var(--navy)}
 .sc-table .team-w td:first-child{color:var(--red)}
 .sc-table .team-n td,.sc-table .team-w td{font-size:14.5px;font-weight:600;height:30px}
@@ -479,7 +480,7 @@ main{max-width:980px;margin:0 auto;padding:6px 12px 30px}
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script>
 const ADMIN_PIN = "9512";
-/*EXPORT_DATE_START*/const EXPORT_DATE = "2026-09-30T23:59:00.000Z";/*EXPORT_DATE_END*/
+/*EXPORT_DATE_START*/const EXPORT_DATE = "2026-10-01T00:05:00.000Z";/*EXPORT_DATE_END*/
 const CUP_DOC = "patriotCup2026"; // stored in the same bracketState collection the match play page uses
 let isAdmin = false, pinRevealed = false;
 const PAIRS_A = [
@@ -567,12 +568,16 @@ const startOf = sc => sc.nine==="back" ? 9 : 0;
 const val = (r,h) => r.scores[h-r.start];
 
 // Each side is a list of rows: one row for a two-man team score, two rows for fourball.
+// Handicap index for each player (from the league's golfer export, 9/30/2026)
+const HCP = {"Anton Dushaj": "17.2", "Arnie Hallai": "24.1", "Ben Parrotta": "9.7", "Bob Gilbert": "9.6", "Chuck Brunello": "18.5", "Dustin Peugeot": "12.0", "Frank Dilalla": "21.0", "Greg Buehner": "13.6", "Greg Costabile": "17.8", "John Spiccia": "19.3", "Matt Gaspar": "22.0", "Matt Gdovin": "11.0", "Michael Leuchtag": "14.2", "Nicholas Lorenzo": "17.2", "Nicholas Spiccia": "15.9", "Paul McHugh": "18.8"};
+const last = full => full.trim().split(" ").slice(-1)[0];
+const withHcp = full => `${last(full)}${HCP[full.trim()]!=null?` <span class="hcp">${HCP[full.trim()]}</span>`:""}`;
 function sideRows(sc, side, pair){
+  const full=pair.split(" + ").map(x=>x.trim());
   if(sc.fourball){
-    const names=pair.split(" + ").map(x=>x.trim().split(" ").slice(-1)[0]);
-    return names.map((nm,k)=>({label:nm, strokes:sc.strokes[side][k], scores:(sc[side][k]||[]), start:startOf(sc)}));
+    return full.map((nm,k)=>({label:withHcp(nm), name:last(nm), strokes:sc.strokes[side][k], scores:(sc[side][k]||[]), start:startOf(sc)}));
   }
-  return [{label:lastNames(pair).replace(" / ","<br>"), strokes:sc.strokes[side], scores:sc[side], start:startOf(sc)}];
+  return [{label:full.map(withHcp).join("<br>"), name:full.map(last).join(" / "), strokes:sc.strokes[side], scores:sc[side], start:startOf(sc)}];
 }
 const blank = v => v==null || v==="";
 function teamNet(rows, h, mode){
@@ -629,7 +634,7 @@ function nineTable(m, sc, st, start){
 }
 
 function strokeKey(st){
-  const parts=[...st.N,...st.W].filter(r=>r.strokes>0).map(r=>`${r.label.replace("<br>"," / ")} ${r.strokes}`);
+  const parts=[...st.N,...st.W].filter(r=>r.strokes>0).map(r=>`${r.name} ${r.strokes}`);
   return parts.length ? `Strokes: ${parts.join(", ")}` : "No strokes";
 }
 
