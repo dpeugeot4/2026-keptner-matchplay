@@ -618,7 +618,7 @@ function matchStatus(sc, m){
 }
 
 function resultLine(m, st){
-  if(!st.played) return {cls:"pending", html:"Hole-by-hole scores are posted after the round."};
+  if(!st.played) return {cls:"pending", html:""};
   const left=st.holes-st.played, L=Math.abs(st.lead);
   const side = st.lead>0 ? `<span class="n">Navy</span>` : `<span class="w">White</span>`;
   if(st.lead===0 && left===0) return {cls:"", html:"Match halved"};
