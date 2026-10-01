@@ -208,6 +208,8 @@ main{max-width:980px;margin:0 auto;padding:6px 12px 30px}
 .rules-pill{display:block;background:var(--surface);border-radius:10px;padding:8px 16px;box-shadow:0 4px 16px rgba(0,0,0,.12);font-family:"Source Sans 3",system-ui,sans-serif;font-size:13.5px;font-weight:700;color:var(--ink);text-align:center;line-height:1.6}
 .rules-pill .dot{font-size:1.6em;line-height:0;vertical-align:middle;margin:0 2px;color:var(--muted)}
 .rules-pill .tiebreaker{display:block;margin-top:6px;font-weight:700}
+.hcp-small{font-size:11px;font-weight:400;color:var(--muted);vertical-align:middle;margin:0 4px}
+.hcp-amp{margin:0 4px}
 @media(max-width:640px){
   .rules-pill{font-size:12.5px;padding:7px 12px}
 }
@@ -225,7 +227,7 @@ main{max-width:980px;margin:0 auto;padding:6px 12px 30px}
 .row{border-top:1px solid var(--line)}
 .row:first-of-type{border-top:0}
 
-.side{border:0;background:transparent;cursor:pointer;padding:9px 14px;font-size:16.5px;font-weight:600;color:var(--ink);transition:background .2s,color .2s;display:flex;align-items:center}
+.side{border:0;background:transparent;cursor:pointer;padding:9px 14px;font-size:16.5px;font-weight:600;color:var(--ink);transition:background .2s,color .2s;display:flex;align-items:center;min-width:0}
 .side.navy{justify-content:flex-end;text-align:right}
 .side.white{justify-content:flex-start;text-align:left}
 .side:hover{background:var(--slot)}
@@ -251,6 +253,10 @@ main{max-width:980px;margin:0 auto;padding:6px 12px 30px}
   .card-head{padding:10px 12px}
   .row,.thead{grid-template-columns:1fr 132px 1fr}
   .side{font-size:14px;padding:8px 9px;line-height:1.2}
+  .side.navy:has(.hcp-player){flex-direction:column;align-items:flex-end;gap:1px}
+  .side.white:has(.hcp-player){flex-direction:column;align-items:flex-start;gap:1px}
+  .hcp-amp{display:none}
+  .hcp-player{display:block}
   .thead>div{padding:6px 9px}
   .center{padding:5px;gap:4px}
   .slot{height:30px;font-size:18px}
@@ -691,6 +697,11 @@ async function save(){
 const fmt = n => { if(n===0.5) return ".5"; return Number.isInteger(n) ? String(n) : n.toFixed(1); };
 const ptsFor = r => r==="N"?[1,0]:r==="W"?[0,1]:r==="H"?[.5,.5]:[0,0];
 const displayPair = s => s.replace(/ \+ /g, " & ");
+const displayPairHcp = s => s.split(" + ").map(n => {
+  n = n.trim();
+  const h = HCP[n];
+  return h ? `<span class="hcp-player">${n} <span class="hcp-small">${h}</span></span>` : `<span class="hcp-player">${n}</span>`;
+}).join('<span class="hcp-amp">&amp;</span>');
 
 function build(){
   const WHEN={r1:"Friday 1pm", r3:"Sunday 10am"};
@@ -701,14 +712,17 @@ function build(){
       <div class="thead"><div class="c-n">Navy</div><div class="c-m">Match</div><div>White</div></div>
       ${r.matches.map((m,i)=>{
         const id=`${r.id}-${i}`;
+        const showHcp = r.id === "r1";
+        const navyLabel = showHcp ? displayPairHcp(m[0]) : displayPair(m[0]);
+        const whiteLabel = showHcp ? displayPairHcp(m[1]) : displayPair(m[1]);
         return `<div class="row" id="row-${id}">
-          <button class="side navy" type="button" data-id="${id}" data-pick="N" aria-label="Navy wins: ${m[0]}">${displayPair(m[0])}</button>
+          <button class="side navy" type="button" data-id="${id}" data-pick="N" aria-label="Navy wins: ${m[0]}">${navyLabel}</button>
           <div class="center">
             <button class="slot sn" type="button" data-id="${id}" data-pick="N" aria-label="Navy point"></button>
             <button class="tie" type="button" data-id="${id}" data-pick="H" aria-pressed="false">Tie</button>
             <button class="slot sw" type="button" data-id="${id}" data-pick="W" aria-label="White point"></button>
           </div>
-          <button class="side white" type="button" data-id="${id}" data-pick="W" aria-label="White wins: ${m[1]}">${displayPair(m[1])}</button>
+          <button class="side white" type="button" data-id="${id}" data-pick="W" aria-label="White wins: ${m[1]}">${whiteLabel}</button>
         </div>`;}).join("")}
     </section>`).join("");
 
