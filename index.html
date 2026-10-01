@@ -693,7 +693,7 @@ const ptsFor = r => r==="N"?[1,0]:r==="W"?[0,1]:r==="H"?[.5,.5]:[0,0];
 const displayPair = s => s.replace(/ \+ /g, " & ");
 
 function build(){
-  const WHEN={r1:"Friday 1pm", r3:"Sunday 3pm"};
+  const WHEN={r1:"Friday 1pm", r3:"Sunday 10am"};
   document.getElementById("rounds").innerHTML = ROUNDS.map(r=>`
     <section class="card" aria-labelledby="h-${r.id}">
       <div class="card-head"><h2 id="h-${r.id}">${r.name.replace(/ - (Front|Back) 9$/," <span class=\"nw\">- $1 9</span>")}${WHEN[r.id]?` <span class="when">${WHEN[r.id]}</span>`:""}</h2><div class="head-r"><span class="tally" id="t-${r.id}"></span>${r.note?`<button class="info-chip" type="button" data-note="${r.id}" aria-expanded="false" aria-controls="note-${r.id}">${r.noteLabel}</button>`:""}${hasCards(r.id)?`<button class="sc-chip" type="button" data-sc="${r.id}">View scorecard</button>`:""}</div></div>
