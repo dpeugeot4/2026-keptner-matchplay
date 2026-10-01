@@ -489,15 +489,15 @@ const CUP_DOC = "patriotCup2026"; // stored in the same bracketState collection 
 let isAdmin = false, pinRevealed = false;
 const PAIRS_A = [
   ["Dustin Peugeot + Matt Gdovin","Greg Buehner + Michael Leuchtag"],
-  ["Bob Gilbert + Matt Gaspar","Greg Costabile + Nicholas Lorenzo"],
+  ["Bob Gilbert + Matt Gaspar","Greg Costabile + Nick Lorenzo"],
   ["Ben Parrotta + Anton Dushaj","Paul McHugh + John Spiccia"],
   ["Arnie Hallai + Frank Dilalla","Chuck Brunello + Nicholas Spiccia"]
 ];
 const PAIRS_B = [
   ["Dustin Peugeot + Matt Gdovin","John Spiccia + Paul McHugh"],
-  ["Bob Gilbert + Matt Gaspar","Greg Buehner + Nicholas Lorenzo"],
+  ["Bob Gilbert + Matt Gaspar","Greg Buehner + Michael Leuchtag"],
   ["Ben Parrotta + Anton Dushaj","Chuck Brunello + Nicholas Spiccia"],
-  ["Frank Dilalla + Arnie Hallai","Greg Costabile + Michael Leuchtag"]
+  ["Frank Dilalla + Arnie Hallai","Greg Costabile + Nick Lorenzo"]
 ];
 const ROUNDS = [
   {id:"r1", name:"Rd 1 Scramble - Front 9", matches:PAIRS_A, noteLabel:"Handicap",
@@ -513,7 +513,7 @@ const ROUNDS = [
     ["Dustin Peugeot","John Spiccia"],
     ["Matt Gdovin","Paul McHugh"],
     ["Bob Gilbert","Greg Buehner"],
-    ["Matt Gaspar","Nicholas Lorenzo"],
+    ["Matt Gaspar","Nick Lorenzo"],
     ["Ben Parrotta","Chuck Brunello"],
     ["Anton Dushaj","Nicholas Spiccia"],
     ["Frank Dilalla","Greg Costabile"],
@@ -544,11 +544,11 @@ const SCORECARDS = {
   // Fourball: strokes and scores are per player, in the same order as the names in the pairing
   "r3-0":{date:"Oct 4, 2026", fourball:true, mode:"low", strokes:{n:[1,0],w:[4,3]}, n:[[],[]], w:[[],[]]},
   "r3-1":{date:"Oct 4, 2026", fourball:true, mode:"low", strokes:{n:[0,5],w:[2,2]}, n:[[],[]], w:[[],[]]},
-  "r3-2":{date:"Oct 4, 2026", fourball:true, mode:"low", strokes:{n:[0,3],w:[4,4]}, n:[[],[]], w:[[],[]]},
+  "r3-2":{date:"Oct 4, 2026", fourball:true, mode:"low", strokes:{n:[0,3],w:[4,3]}, n:[[],[]], w:[[],[]]},
   "r3-3":{date:"Oct 4, 2026", fourball:true, mode:"low", strokes:{n:[2,3],w:[0,0]}, n:[[],[]], w:[[],[]]},
   "r4-0":{date:"Oct 4, 2026", nine:"back", fourball:true, mode:"total", strokes:{n:[0,0],w:[3,3]}, n:[[],[]], w:[[],[]]},
   "r4-1":{date:"Oct 4, 2026", nine:"back", fourball:true, mode:"total", strokes:{n:[0,5],w:[2,2]}, n:[[],[]], w:[[],[]]},
-  "r4-2":{date:"Oct 4, 2026", nine:"back", fourball:true, mode:"total", strokes:{n:[0,3],w:[3,4]}, n:[[],[]], w:[[],[]]},
+  "r4-2":{date:"Oct 4, 2026", nine:"back", fourball:true, mode:"total", strokes:{n:[0,3],w:[3,2]}, n:[[],[]], w:[[],[]]},
   "r4-3":{date:"Oct 4, 2026", nine:"back", fourball:true, mode:"total", strokes:{n:[2,3],w:[0,0]}, n:[[],[]], w:[[],[]]},
   // Singles: front nine only; strokes are the front-nine share of each player's handicap
   "ind-0":{date:"Oct 4, 2026", strokes:{n:0,w:3}, n:[], w:[]},
@@ -573,7 +573,7 @@ const val = (r,h) => r.scores[h-r.start];
 
 // Each side is a list of rows: one row for a two-man team score, two rows for fourball.
 // Handicap index for each player (from the league's golfer export, 9/30/2026)
-const HCP = {"Anton Dushaj": "17.2", "Arnie Hallai": "24.1", "Ben Parrotta": "9.7", "Bob Gilbert": "9.6", "Chuck Brunello": "18.5", "Dustin Peugeot": "12.0", "Frank Dilalla": "21.0", "Greg Buehner": "13.6", "Greg Costabile": "17.8", "John Spiccia": "19.3", "Matt Gaspar": "22.0", "Matt Gdovin": "11.0", "Michael Leuchtag": "14.2", "Nicholas Lorenzo": "17.2", "Nicholas Spiccia": "15.9", "Paul McHugh": "18.8"};
+const HCP = {"Anton Dushaj": "17.2", "Arnie Hallai": "24.1", "Ben Parrotta": "9.7", "Bob Gilbert": "9.6", "Chuck Brunello": "18.5", "Dustin Peugeot": "12.0", "Frank Dilalla": "21.0", "Greg Buehner": "13.6", "Greg Costabile": "17.8", "John Spiccia": "19.3", "Matt Gaspar": "22.0", "Matt Gdovin": "11.0", "Michael Leuchtag": "14.2", "Nick Lorenzo": "17.2", "Nicholas Spiccia": "15.9", "Paul McHugh": "18.8"};
 const last = full => full.trim().split(" ").slice(-1)[0];
 const withHcp = full => `${last(full)}${HCP[full.trim()]!=null?` <span class="hcp">${HCP[full.trim()]}</span>`:""}`;
 function sideRows(sc, side, pair){
@@ -851,7 +851,7 @@ const ROSTER_NAMES = [
   "Dustin Peugeot","Eric Mohre","Frank Dilalla","Frank Guarino","Frank Polisena","Greg Buehner",
   "Greg Costabile","Jack Wu","Jeff Keptner","John Gaspar","John Spiccia","Justin Keptner",
   "Larry Guarino","Matt Gaspar","Matt Gdovin","Michael Hallai","Michael Leuchtag",
-  "Michael Paglia","Mitch Cambareri","Nicholas Lorenzo","Nicholas Spiccia","Paul McHugh","Bobby Lewis","Steven Andrzejczyk",
+  "Michael Paglia","Mitch Cambareri","Nick Lorenzo","Nicholas Spiccia","Paul McHugh","Bobby Lewis","Steven Andrzejczyk",
   "Vincent Culotta"
 ].sort();
 
