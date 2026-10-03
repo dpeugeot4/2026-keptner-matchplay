@@ -245,6 +245,7 @@ main{max-width:980px;margin:0 auto;padding:6px 12px 30px}
 .side:hover{background:var(--slot)}
 .row.won-N .side.navy{background:var(--navy);color:#fff}
 .row.won-W .side.white{background:var(--red);color:#fff}
+.row.won-N .side.navy .hcp-small,.row.won-W .side.white .hcp-small{color:#fff}
 .row.won-N .side.white,.row.won-W .side.navy{color:var(--muted);font-weight:400}
 .row.won-H .side.navy,.row.won-H .side.white{background:#e5e7eb;color:#14213d}
 .slot.half{background:#e5e7eb;color:#14213d}
@@ -274,9 +275,10 @@ main{max-width:980px;margin:0 auto;padding:6px 12px 30px}
   .slot{height:30px;font-size:18px}
   .tie{padding:0 7px}
   .card-head h2{font-size:20px}
-  .rolled-group summary{font-size:18px;flex-wrap:wrap}
-  .rolled-spacer{display:none}
-  .rolled-score{width:100%;margin-left:26px}
+  .rolled-group summary{font-size:14px;gap:5px;padding:12px 12px;flex-wrap:nowrap}
+  .rolled-caret{font-size:15px}
+  .rolled-score{font-size:12px;gap:3px}
+  .rolled-score .tn,.rolled-score .tw{padding:2px 7px;font-weight:700}
 }
 
 .nw{white-space:nowrap}
@@ -385,7 +387,7 @@ main{max-width:980px;margin:0 auto;padding:6px 12px 30px}
   <button type="button" class="chatter-btn" id="banterToggleBtn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="flex:none;"><path d="M4 4h16a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H9l-4.5 4.5A0.5 0.5 0 0 1 3 21V6a1 1 0 0 1 1-1z" fill="#14213d"></path></svg>League Chatter<span class="banter-unread-badge" id="banterUnreadBadge" style="display:none;">0</span></button>
   <div class="tb-date">
     <button type="button" class="status-dot-btn" id="statusDot" aria-label="status"><span class="status-dot-visual"></span></button>
-    <span id="asOfLabel">Last updated: 9/30</span>
+    <span id="asOfLabel">Last updated: 10/3</span>
   </div>
   <span class="tb-ctrl" id="viewerControls">
     <input class="pin-input" id="pinInput" type="password" inputmode="numeric" placeholder="admin PIN">
@@ -506,19 +508,19 @@ main{max-width:980px;margin:0 auto;padding:6px 12px 30px}
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script>
 const ADMIN_PIN = "9512";
-/*EXPORT_DATE_START*/const EXPORT_DATE = "2026-10-01T00:05:00.000Z";/*EXPORT_DATE_END*/
+/*EXPORT_DATE_START*/const EXPORT_DATE = "2026-10-03T15:00:00.000Z";/*EXPORT_DATE_END*/
 const CUP_DOC = "patriotCup2026"; // stored in the same bracketState collection the match play page uses
 let isAdmin = false, pinRevealed = false;
 const PAIRS_A = [
-  ["Dustin Peugeot + Matt Gdovin","Greg Buehner + Michael Leuchtag"],
+  ["Dustin Peugeot + Matt Gdovin","Greg Buehner + Mike Leuchtag"],
   ["Bob Gilbert + Matt Gaspar","Greg Costabile + Nick Lorenzo"],
   ["Ben Parrotta + Anton Dushaj","Paul McHugh + John Spiccia"],
-  ["Arnie Hallai + Frank Dilalla","Chuck Brunello + Nicholas Spiccia"]
+  ["Arnie Hallai + Frank Dilalla","Chuck Brunello + Nick Spiccia"]
 ];
 const PAIRS_B = [
   ["Dustin Peugeot + Matt Gdovin","John Spiccia + Paul McHugh"],
-  ["Bob Gilbert + Matt Gaspar","Greg Buehner + Michael Leuchtag"],
-  ["Ben Parrotta + Anton Dushaj","Chuck Brunello + Nicholas Spiccia"],
+  ["Bob Gilbert + Matt Gaspar","Greg Buehner + Mike Leuchtag"],
+  ["Ben Parrotta + Anton Dushaj","Chuck Brunello + Nick Spiccia"],
   ["Frank Dilalla + Arnie Hallai","Greg Costabile + Nick Lorenzo"]
 ];
 const ROUNDS = [
@@ -531,9 +533,9 @@ const ROUNDS = [
     ["Dustin Peugeot","John Spiccia"],
     ["Matt Gdovin","Paul McHugh"],
     ["Bob Gilbert","Greg Buehner"],
-    ["Matt Gaspar","Michael Leuchtag"],
+    ["Matt Gaspar","Mike Leuchtag"],
     ["Ben Parrotta","Chuck Brunello"],
-    ["Anton Dushaj","Nicholas Spiccia"],
+    ["Anton Dushaj","Nick Spiccia"],
     ["Frank Dilalla","Greg Costabile"],
     ["Arnie Hallai","Nick Lorenzo"]
   ]},
@@ -595,7 +597,7 @@ const val = (r,h) => r.scores[h-r.start];
 
 // Each side is a list of rows: one row for a two-man team score, two rows for fourball.
 // Handicap index for each player (from the league's golfer export, 9/30/2026)
-const HCP = {"Anton Dushaj": "17.2", "Arnie Hallai": "24.1", "Ben Parrotta": "9.7", "Bob Gilbert": "9.6", "Chuck Brunello": "18.5", "Dustin Peugeot": "12.0", "Frank Dilalla": "21.0", "Greg Buehner": "13.6", "Greg Costabile": "17.8", "John Spiccia": "19.3", "Matt Gaspar": "22.0", "Matt Gdovin": "11.0", "Michael Leuchtag": "14.2", "Nick Lorenzo": "17.2", "Nicholas Spiccia": "15.9", "Paul McHugh": "18.8"};
+const HCP = {"Anton Dushaj": "17.2", "Arnie Hallai": "24.1", "Ben Parrotta": "9.7", "Bob Gilbert": "9.6", "Chuck Brunello": "18.5", "Dustin Peugeot": "12.0", "Frank Dilalla": "21.0", "Greg Buehner": "13.6", "Greg Costabile": "17.8", "John Spiccia": "19.3", "Matt Gaspar": "22.0", "Matt Gdovin": "11.0", "Mike Leuchtag": "14.2", "Nick Lorenzo": "17.2", "Nick Spiccia": "15.9", "Paul McHugh": "18.8"};
 const last = full => full.trim().split(" ").slice(-1)[0];
 const withHcp = full => `${last(full)}${HCP[full.trim()]!=null?` <span class="hcp">${HCP[full.trim()]}</span>`:""}`;
 function sideRows(sc, side, pair){
@@ -900,8 +902,8 @@ const ROSTER_NAMES = [
   "Ben Parrotta","Bob Gilbert","Brian Haberman","Bruce Rodgers","Chuck Brunello","Dan Coffey","Don Haines",
   "Dustin Peugeot","Eric Mohre","Frank Dilalla","Frank Guarino","Frank Polisena","Greg Buehner",
   "Greg Costabile","Jack Wu","Jeff Keptner","John Gaspar","John Spiccia","Justin Keptner",
-  "Larry Guarino","Matt Gaspar","Matt Gdovin","Michael Hallai","Michael Leuchtag",
-  "Michael Paglia","Mitch Cambareri","Nick Lorenzo","Nicholas Spiccia","Paul McHugh","Bobby Lewis","Steven Andrzejczyk",
+  "Larry Guarino","Matt Gaspar","Matt Gdovin","Michael Hallai","Mike Leuchtag",
+  "Michael Paglia","Mitch Cambareri","Nick Lorenzo","Nick Spiccia","Paul McHugh","Bobby Lewis","Steven Andrzejczyk",
   "Vincent Culotta"
 ].sort();
 
