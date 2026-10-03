@@ -185,6 +185,8 @@ body:not(.is-admin) .tools{display:none}
 .board .dash{color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.45)}
 .board .meta{color:#14213d}
 .board .meta span{background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.15);border-radius:999px;padding:2px 10px}
+.rules-jump{background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.15);border-radius:999px;padding:2px 10px;border:0;font-size:14px;color:var(--red);font-weight:700;cursor:pointer;font-family:inherit}
+.rules-jump:hover{background:var(--red-soft)}
 .board .meta strong{color:#8a6d0f}
 .board .meter{background:#fff}
 .board .score{background:#fff;border-radius:22px;padding:8px clamp(8px,1.6vw,14px);width:fit-content;max-width:100%;grid-template-columns:auto auto auto;margin:0 auto;box-shadow:0 4px 16px rgba(0,0,0,.22);border:1px solid rgba(20,33,61,.08)}
@@ -199,12 +201,7 @@ body:not(.is-admin) .tools{display:none}
 /* Round cards */
 main{max-width:980px;margin:0 auto;padding:6px 12px 30px}
 .rules-section{max-width:980px;margin:14px auto 0;padding:0 12px}
-.rules-label{font-family:"Source Sans 3",system-ui,sans-serif;font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--red);margin-bottom:8px;text-align:center;animation:rulesGlow 1.6s ease-in-out infinite}
-@keyframes rulesGlow{
-  0%,100%{text-shadow:0 0 4px rgba(200,16,46,.3)}
-  50%{text-shadow:0 0 10px rgba(200,16,46,.85),0 0 18px rgba(200,16,46,.5)}
-}
-@media (prefers-reduced-motion: reduce){ .rules-label{animation:none;text-shadow:0 0 6px rgba(200,16,46,.5)} }
+.rules-label{font-family:"Source Sans 3",system-ui,sans-serif;font-size:20px;font-weight:700;color:var(--red);text-align:center;margin-bottom:10px}
 .rules-pill{display:block;background:var(--surface);border-radius:10px;padding:8px 16px;box-shadow:0 4px 16px rgba(0,0,0,.12);font-family:"Source Sans 3",system-ui,sans-serif;font-size:13.5px;font-weight:700;color:var(--ink);text-align:center;line-height:1.6}
 .rules-pill .dot{font-size:1.6em;line-height:0;vertical-align:middle;margin:0 2px;color:var(--muted)}
 .rules-pill .tiebreaker{display:block;margin-top:6px;font-weight:700}
@@ -214,6 +211,21 @@ main{max-width:980px;margin:0 auto;padding:6px 12px 30px}
   .rules-pill{font-size:12.5px;padding:7px 12px}
 }
 .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;margin-top:18px;overflow:hidden;box-shadow:0 1px 3px rgba(20,33,61,.06)}
+.rolled-group{margin-top:22px}
+.rolled-group summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px;font-family:"Barlow Condensed","Arial Narrow",sans-serif;font-size:23px;font-weight:700;letter-spacing:.01em;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 18px;box-shadow:0 1px 3px rgba(20,33,61,.06)}
+.rolled-group summary::-webkit-details-marker{display:none}
+.rolled-group[open] summary{border-radius:14px 14px 0 0;border-bottom:1px solid var(--line)}
+.rolled-caret{display:inline-block;transition:transform .15s;font-size:20px;color:var(--navy);flex:none}
+.rolled-group[open] .rolled-caret{transform:rotate(90deg)}
+.rolled-spacer{flex:1}
+.rolled-score{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:16px;color:var(--muted);display:inline-flex;align-items:center;gap:6px}
+.rolled-score .tn,.rolled-score .tw{display:inline-flex;align-items:center;border-radius:999px;padding:4px 12px;font-weight:800;color:#fff}
+.rolled-score .tn{background:var(--navy)}
+.rolled-score .tw{background:var(--red)}
+.rolled-score .sep{color:var(--muted);font-weight:600}
+.rolled-body{border:1px solid var(--line);border-top:none;border-radius:0 0 14px 14px;padding:4px 0 2px;background:var(--bg)}
+.rolled-body .card{margin:14px 12px}
+.rolled-body .card:first-child{margin-top:14px}
 .card-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:11px 16px;border-bottom:1px solid var(--line)}
 .card-head h2{margin:0;font-family:"Barlow Condensed","Arial Narrow",sans-serif;font-size:23px;font-weight:700;letter-spacing:.01em}
 .tally{font-size:14px;font-weight:700;color:var(--muted);background:var(--slot);border-radius:999px;padding:3px 11px}
@@ -262,6 +274,9 @@ main{max-width:980px;margin:0 auto;padding:6px 12px 30px}
   .slot{height:30px;font-size:18px}
   .tie{padding:0 7px}
   .card-head h2{font-size:20px}
+  .rolled-group summary{font-size:18px;flex-wrap:wrap}
+  .rolled-spacer{display:none}
+  .rolled-score{width:100%;margin-left:26px}
 }
 
 .nw{white-space:nowrap}
@@ -295,6 +310,7 @@ main{max-width:980px;margin:0 auto;padding:6px 12px 30px}
 }
 
 .card-head h2 .when{color:var(--muted);font-weight:600;white-space:nowrap}
+.when-above{display:flex;align-items:center;justify-content:space-between;font-family:"Source Sans 3",system-ui,sans-serif;font-size:17px;font-weight:600;color:var(--muted);margin:18px 0 -6px 2px}
 /* Scorecard chip + overlay */
 .info-chip,.sc-chip{display:inline-flex;align-items:center;height:28px;border-radius:999px;padding:0 12px;font-family:"Source Sans 3",system-ui,sans-serif;font-size:13px;line-height:1;letter-spacing:0;cursor:pointer;white-space:nowrap}
 .info-chip{border:1px solid #000;background:#fff;color:#000;font-weight:600}
@@ -467,12 +483,12 @@ main{max-width:980px;margin:0 auto;padding:6px 12px 30px}
   </div>
 </header>
 
+<main id="rounds"></main>
+
 <div class="rules-section">
   <div class="rules-label">Rules of Play</div>
   <div class="rules-pill">Red stakes everywhere <span class="dot">&middot;</span> Rake &amp; place in sand <span class="dot">&middot;</span> Lift, clean &amp; place in fairways, standing water &amp; bunkers &mdash; no closer to the hole, can't improve the lie <span class="dot">&middot;</span> Play if course is open &mdash; arrive on time; SW will allow delayed starts if possible TBD<span class="tiebreaker">TIEBREAKER: Top point-winning pair from each team will play sudden-death alternate shot, starting on 10, 11, 18, 10, etc.</span></div>
 </div>
-
-<main id="rounds"></main>
 
 <div class="sc-overlay" id="scOverlay" aria-hidden="true">
   <div class="sc-modal" role="dialog" aria-modal="true" aria-labelledby="scTitle">
@@ -506,10 +522,6 @@ const PAIRS_B = [
   ["Frank Dilalla + Arnie Hallai","Greg Costabile + Nick Lorenzo"]
 ];
 const ROUNDS = [
-  {id:"r1", name:"Rd 1 Scramble - Front 9", matches:PAIRS_A, noteLabel:"Handicap",
-    note:"USGA 2 man scramble format allowances are applied:<br>35% of the lower handicap + 15% of the higher handicap, using SW handicaps based on course rating/player index, played off the low team and split between the nines. Any odd stroke goes to the front, which holds index 1."},
-  {id:"r2", name:"Rd 2 Alternate Shot - Back 9", matches:PAIRS_A, noteLabel:"Handicap",
-    note:"USGA 2 man alternate shot format allowances applied:<br>50% of the partners\u2019 combined handicaps, using SW handicaps based on course rating/player index, played off the low team and split between the nines. Any odd stroke goes to the front, which holds index 1."},
   {id:"r3", name:"Rd 3 Fourball - Low Ball - Front 9", matches:PAIRS_B, noteLabel:"Handicap",
     note:"70% of each player\u2019s SW handicap based on course rating/player index, played off the low handicap and split between the nines. Any odd stroke goes to the front, which holds index 1."},
   {id:"r4", name:"Rd 4 Fourball - Low Total - Back 9", matches:PAIRS_B, noteLabel:"Handicap",
@@ -524,7 +536,11 @@ const ROUNDS = [
     ["Anton Dushaj","Nicholas Spiccia"],
     ["Frank Dilalla","Greg Costabile"],
     ["Arnie Hallai","Nick Lorenzo"]
-  ]}
+  ]},
+  {id:"r1", name:"Rd 1 Scramble - Front 9", matches:PAIRS_A, noteLabel:"Handicap", rolled:"day1",
+    note:"USGA 2 man scramble format allowances are applied:<br>35% of the lower handicap + 15% of the higher handicap, using SW handicaps based on course rating/player index, played off the low team and split between the nines. Any odd stroke goes to the front, which holds index 1."},
+  {id:"r2", name:"Rd 2 Alternate Shot - Back 9", matches:PAIRS_A, noteLabel:"Handicap", rolled:"day1",
+    note:"USGA 2 man alternate shot format allowances applied:<br>50% of the partners\u2019 combined handicaps, using SW handicaps based on course rating/player index, played off the low team and split between the nines. Any odd stroke goes to the front, which holds index 1."}
 ];
 const TOTAL = ROUNDS.reduce((s,r)=>s+r.matches.length,0);
 const TO_WIN = TOTAL/2 + 0.5;
@@ -703,9 +719,11 @@ const displayPairHcp = s => s.split(" + ").map(n => {
   return h ? `<span class="hcp-player">${n} <span class="hcp-small">${h}</span></span>` : `<span class="hcp-player">${n}</span>`;
 }).join('<span class="hcp-amp">&amp;</span>');
 
-function build(){
-  const WHEN={r1:"Friday 1pm", r3:"Sunday 10am"};
-  document.getElementById("rounds").innerHTML = ROUNDS.map(r=>`
+const WHEN={r1:"Friday 1pm"};
+const WHEN_ABOVE={r3:"Sunday 10am"};
+function cardHtml(r){
+  return `
+    ${WHEN_ABOVE[r.id]?`<div class="when-above"><span>${WHEN_ABOVE[r.id]}</span><button type="button" class="rules-jump" id="rulesJumpBtn">Rules of Play &#9662;</button></div>`:""}
     <section class="card" aria-labelledby="h-${r.id}">
       <div class="card-head"><h2 id="h-${r.id}">${r.name.replace(/ - (Front|Back) 9$/," <span class=\"nw\">- $1 9</span>")}${WHEN[r.id]?` <span class="when">${WHEN[r.id]}</span>`:""}</h2><div class="head-r"><span class="tally" id="t-${r.id}"></span>${r.note?`<button class="info-chip" type="button" data-note="${r.id}" aria-expanded="false" aria-controls="note-${r.id}">${r.noteLabel}</button>`:""}${hasCards(r.id)?`<button class="sc-chip" type="button" data-sc="${r.id}">View scorecard</button>`:""}</div></div>
       ${r.note?`<div class="round-note" id="note-${r.id}" hidden>${r.note}</div>`:""}
@@ -724,7 +742,18 @@ function build(){
           </div>
           <button class="side white" type="button" data-id="${id}" data-pick="W" aria-label="White wins: ${m[1]}">${whiteLabel}</button>
         </div>`;}).join("")}
-    </section>`).join("");
+    </section>`;
+}
+function build(){
+  const upper = ROUNDS.filter(r=>!r.rolled);
+  const rolled = ROUNDS.filter(r=>r.rolled);
+  document.getElementById("rounds").innerHTML =
+    (rolled.length ? `
+    <details class="rolled-group" id="rolled-day1">
+      <summary><span class="rolled-caret" aria-hidden="true">&#9656;</span> Day 1 - Rds 1 &amp; 2 Results <span class="rolled-spacer"></span><span class="rolled-score" id="day1Score"></span></summary>
+      <div class="rolled-body">${rolled.map(cardHtml).join("")}</div>
+    </details>` : "") +
+    upper.map(cardHtml).join("");
 
   document.getElementById("rounds").addEventListener("click", e=>{
     const info = e.target.closest("button[data-note]");
@@ -748,6 +777,7 @@ function setSlot(el, val, color){
 
 function update(){
   let N=0,W=0,played=0;
+  let day1N=0,day1W=0;
   ROUNDS.forEach(r=>{
     let rn=0,rw=0,rp=0;
     r.matches.forEach((m,i)=>{
@@ -760,11 +790,14 @@ function update(){
       row.querySelector(".tie").setAttribute("aria-pressed", String(res==="H"));
     });
     N+=rn; W+=rw; played+=rp;
+    if(r.rolled==="day1"){ day1N+=rn; day1W+=rw; }
     document.getElementById("t-"+r.id).innerHTML = rp
       ? `<span class="tl">Round total</span><span class="tn">Navy ${fmt(rn)}</span> – <span class="tw">White ${fmt(rw)}</span>`
       : (hasCards(r.id) ? "" : `${r.matches.length} matches`);
     document.getElementById("t-"+r.id).style.display = (!rp && hasCards(r.id)) ? "none" : "";
   });
+  const day1El = document.getElementById("day1Score");
+  if(day1El) day1El.innerHTML = `<span class="tn">Navy ${fmt(day1N)}</span><span class="sep">&ndash;</span><span class="tw">White ${fmt(day1W)}</span>`;
   document.getElementById("navyPts").textContent=fmt(N);
   document.getElementById("whitePts").textContent=fmt(W);
   document.getElementById("barN").style.width=(N/TOTAL*100)+"%";
@@ -783,6 +816,9 @@ document.getElementById("resetBtn").addEventListener("click",()=>{
 });
 
 build(); update();
+document.getElementById("rulesJumpBtn").addEventListener("click", ()=>{
+  document.querySelector(".rules-section").scrollIntoView({behavior:"smooth", block:"start"});
+});
 
 /* ============ TEE-OFF COUNTDOWN: Friday 1:00 PM ET, hides itself at tee off ============ */
 const TEE_OFF = Date.UTC(2026,9,2,17,0);
